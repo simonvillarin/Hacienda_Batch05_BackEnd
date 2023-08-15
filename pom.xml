@@ -73,6 +73,10 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
+		<dependency>
+   			<groupId>org.glassfish.jersey.media</groupId>
+    		<artifactId>jersey-media-multipart</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
