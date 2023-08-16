@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.FarmingTips;
 import org.ssglobal.training.codes.request.FarmingTipsRequest;
 import org.ssglobal.training.codes.response.Response;
-import org.ssglobal.training.codes.service.impl.FarmingTipsServiceImpl;
+import org.ssglobal.training.codes.service.FarmingTipsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,51 +24,51 @@ import lombok.RequiredArgsConstructor;
 @Path("/farming")
 @RequiredArgsConstructor
 public class FarmingTipsController {
-	private final FarmingTipsServiceImpl farmingTipsServiceImpl;
+	private final FarmingTipsService farmingTipsService;
 	
 	@GET
 	@Path("/tips")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<FarmingTips> findAll() {
-		return farmingTipsServiceImpl.findAllFarmingTips();
+	public List<FarmingTips> getAllFarmingTips() {
+		return farmingTipsService.getAllFarmingTips();
 	}
 	
 	@GET
 	@Path("/tip/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public FarmingTips findById(@PathParam("id")  Long tipId) {
-		return farmingTipsServiceImpl.findById(tipId);
+	public FarmingTips getFarmingTipsById(@PathParam("id") Long id) {
+		return farmingTipsService.getFarmingTipsById(id);
 	}
 	
 	@POST
 	@Path("/tip")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addTio(@RequestBody FarmingTips tip) {
-		return farmingTipsServiceImpl.addTip(tip);
+	public Response addFarmingTip(@RequestBody FarmingTips farmingTip) {
+		return farmingTipsService.addFarmingTip(farmingTip);
 	}
 	
 	@POST
 	@Path("/tip/image")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addTipWithImage(@RequestBody FarmingTipsRequest tip) {
-		return farmingTipsServiceImpl.addTipWithImage(tip);
+	public Response addFarmingTipWithImage(@RequestBody FarmingTipsRequest farmingTip) {
+		return farmingTipsService.addFarmingTipWithImage(farmingTip);
 	}
 	
 	@PUT
 	@Path("/tip/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateTip(@PathParam("id") Long tipId, @RequestBody FarmingTips tip) {
-		return farmingTipsServiceImpl.updateTip(tipId, tip);
+	public Response updateFarmingTip(@PathParam("id") Long id, @RequestBody FarmingTips farmingTip) {
+		return farmingTipsService.updateFarmingTip(id, farmingTip);
 	}
 	
 	@PUT
 	@Path("/tip/image/{id}")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateTipWithImage(@PathParam("id") Long tipId, @RequestBody FarmingTipsRequest tip) {
-		return farmingTipsServiceImpl.updateTipWithImage(tipId, tip);
+	public Response updateFarmingTip(@PathParam("id") Long id,  @RequestBody FarmingTipsRequest farmingTip) {
+		return farmingTipsService.updateFarmingTipWithImage(id, farmingTip);
 	}
 }

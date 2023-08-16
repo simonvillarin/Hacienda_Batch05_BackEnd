@@ -10,7 +10,8 @@ import javax.ws.rs.core.Context;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.ssglobal.training.codes.service.impl.ImageServiceImpl;
+import org.ssglobal.training.codes.model.Image;
+import org.ssglobal.training.codes.service.ImageService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,13 +19,13 @@ import lombok.RequiredArgsConstructor;
 @Path("/image")
 @RequiredArgsConstructor
 public class ImageController {
-	private final ImageServiceImpl imageServiceImpl;
+	private final ImageService imageService;
 	
 	@GET
 	@Path("/{filename}")
 	public void retrieve(@PathParam("filename") String filename, @Context HttpServletResponse response)
 			throws IOException {
-		var image = imageServiceImpl.getImage(filename);
+		Image image = imageService.getByFilename(filename);
 		byte[] imageData = image.getData();
 		String mimeType = image.getMimeType();
 
