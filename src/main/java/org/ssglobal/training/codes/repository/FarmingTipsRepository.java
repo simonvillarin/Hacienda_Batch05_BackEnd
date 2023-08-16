@@ -23,97 +23,30 @@ public class FarmingTipsRepository {
 	public List<FarmingTips> getAllFarmingTips() {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM FarmingTips", FarmingTips.class).list();
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
 	public FarmingTips getFarmingTipsById(Long id) {
 		try (Session session = sf.openSession()) {
 			return session.get(FarmingTips.class, id);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	public Response addFarmingTip(FarmingTips farmingTip) {
+	public Response addFarmingTip(FarmingTipsRequest farmingTip) {
 		try (Session session = sf.openSession()) {
 			session.beginTransaction();
-			session.persist(farmingTip);
-			session.getTransaction().commit();
-		}
-		
-		return Response.builder()
-				.status(201)
-				.message("Farming tip successfully created")
-				.timestamp(LocalDateTime.now())
-				.build();
-	}
-	
-	public Response addFarmingTipWithImage(FarmingTipsRequest farmingTip) {
-		try (Session session = sf.openSession()) {
-			session.beginTransaction();
-	
-			Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
-					.setParameter("filename", farmingTip.getFilename());
-			Image image = query.uniqueResult();
-			if (image == null) {
-				Image img = Image.builder()
-						.filename(farmingTip.getFilename())
-						.mimeType(farmingTip.getMimeType())
-						.data(farmingTip.getData())
-						.build();
-				session.persist(img);
+			
+			FarmingTips tip = new FarmingTips();
+			tip.setStatus(true);
+			
+			if (farmingTip.getTip() != null && farmingTip.getTip() != "") {
+				tip.setTip(farmingTip.getTip());
 			}
-			
-			FarmingTips tip = FarmingTips.builder()
-					.tip(farmingTip.getTip())
-					.image(createImageLink(farmingTip.getFilename()))
-					.status(true)
-					.build();
-			session.persist(tip);
-			
-			session.getTransaction().commit();
-		}
-		
-		return Response.builder()
-				.status(201)
-				.message("Farming tip successfully created")
-				.timestamp(LocalDateTime.now())
-				.build();
-	}
-	
-	public Response updateFarmingTip(Long id, FarmingTips farmingTip) {
-		try (Session session = sf.openSession()) {
-			session.beginTransaction();
-			
-			FarmingTips tip = session.get(FarmingTips.class, id);
-			if (tip != null) {
-				if (farmingTip.getTip() != null) {
-					tip.setTip(farmingTip.getTip());
-				}
-				if (farmingTip.getStatus() != null) {
-					tip.setStatus(farmingTip.getStatus());
-				}
-				
-			session.getTransaction().commit();
-
-				return Response.builder()
-						.status(201)
-						.message("Farming tip successfully updated")
-						.timestamp(LocalDateTime.now()).build();
-			} else {
-				return Response.builder()
-						.status(404)
-						.message("Farming tip not found")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
-		}
-	}
-	
-	public Response updateFarmingTipWithImage(Long id, FarmingTipsRequest farmingTip) {
-		try (Session session = sf.openSession()) {		
-			FarmingTips tip = session.get(FarmingTips.class, id);
-			if (tip != null) {
-				session.beginTransaction();
-				
+			if (farmingTip.getFilename() != null && farmingTip.getFilename() != "") {
 				Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
 						.setParameter("filename", farmingTip.getFilename());
 				Image image = query.uniqueResult();
@@ -125,15 +58,52 @@ public class FarmingTipsRepository {
 							.build();
 					session.persist(img);
 				}
-				if (farmingTip.getTip() != null) {
+				
+				tip.setImage(createImageLink(farmingTip.getFilename()));
+			}	
+			session.persist(tip);
+			
+			session.getTransaction().commit();
+			
+			return Response.builder()
+					.status(201)
+					.message("Farming tip successfully created")
+					.timestamp(LocalDateTime.now())
+					.build();
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public Response updateFarmingTip(Long id, FarmingTipsRequest farmingTip) {
+		try (Session session = sf.openSession()) {		
+			FarmingTips tip = session.get(FarmingTips.class, id);
+			if (tip != null) {
+				session.beginTransaction();
+				
+				if (farmingTip.getTip() != null && farmingTip.getTip() != "") {
 					tip.setTip(farmingTip.getTip());
 				}
-				if (farmingTip.getFilename() != null) {
+				if (farmingTip.getFilename() != null && farmingTip.getFilename() != "") {
+					Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+							.setParameter("filename", farmingTip.getFilename());
+					Image image = query.uniqueResult();
+					if (image == null) {
+						Image img = Image.builder()
+								.filename(farmingTip.getFilename())
+								.mimeType(farmingTip.getMimeType())
+								.data(farmingTip.getData())
+								.build();
+						session.persist(img);
+					}
+					
 					tip.setImage(createImageLink(farmingTip.getFilename()));
 				}
-				
+				if (farmingTip.getStatus() != null) {
+					tip.setStatus(farmingTip.getStatus());
+				}
 				session.getTransaction().commit();
-
+				
 				return Response.builder()
 						.status(201)
 						.message("Farming tip successfully updated")
@@ -146,6 +116,8 @@ public class FarmingTipsRepository {
 						.timestamp(LocalDateTime.now())
 						.build();
 			}
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	

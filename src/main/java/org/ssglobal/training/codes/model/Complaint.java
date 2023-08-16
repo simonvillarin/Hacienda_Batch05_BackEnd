@@ -38,6 +38,9 @@ public class Complaint {
 	@Column(name = "date")
 	private LocalDate date;
 	
+	@Column(name = "image")
+	private String image;
+	
 	@Column(name = "status")
 	private Boolean status;
 }

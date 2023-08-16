@@ -1,5 +1,7 @@
 package org.ssglobal.training.codes.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,10 +45,13 @@ public class Advertisement {
 	private Double mass;
 	
 	@Column(name = "price")
-	private Integer price;
+	private Double price;
 	
 	@Column(name = "image")
 	private String image;
+	
+	@Column(name = "post_date")
+	private LocalDate postDate;
 	
 	@Column(name = "status")
 	private Boolean status;

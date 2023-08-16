@@ -26,22 +26,12 @@ public class FarmingTipsService {
 	}
 	
 	@Transactional
-	public Response addFarmingTip(FarmingTips farmingTip) {
+	public Response addFarmingTip(FarmingTipsRequest farmingTip) {
 		return farmingTipsRepository.addFarmingTip(farmingTip);
 	}
 	
 	@Transactional
-	public Response addFarmingTipWithImage(FarmingTipsRequest farmingTip) {
-		return farmingTipsRepository.addFarmingTipWithImage(farmingTip);
-	}
-	
-	@Transactional
-	public Response updateFarmingTip(Long id, FarmingTips farmingTip) {
+	public Response updateFarmingTip(Long id, FarmingTipsRequest farmingTip) {
 		return farmingTipsRepository.updateFarmingTip(id, farmingTip);
-	}
-	
-	@Transactional
-	public Response updateFarmingTipWithImage(Long id, FarmingTipsRequest farmingTip) {
-		return farmingTipsRepository.updateFarmingTipWithImage(id, farmingTip);
 	}
 }

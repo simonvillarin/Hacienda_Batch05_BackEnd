@@ -23,6 +23,8 @@ public class ImageRepository {
 			} else {
 				throw new RuntimeException("Image not found");
 			}
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 }

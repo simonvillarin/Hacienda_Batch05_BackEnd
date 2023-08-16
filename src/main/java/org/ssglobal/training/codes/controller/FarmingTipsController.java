@@ -39,36 +39,20 @@ public class FarmingTipsController {
 	public FarmingTips getFarmingTipsById(@PathParam("id") Long id) {
 		return farmingTipsService.getFarmingTipsById(id);
 	}
-	
+
 	@POST
 	@Path("/tip")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addFarmingTip(@RequestBody FarmingTips farmingTip) {
-		return farmingTipsService.addFarmingTip(farmingTip);
-	}
-	
-	@POST
-	@Path("/tip/image")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response addFarmingTipWithImage(@RequestBody FarmingTipsRequest farmingTip) {
-		return farmingTipsService.addFarmingTipWithImage(farmingTip);
+		return farmingTipsService.addFarmingTip(farmingTip);
 	}
 	
 	@PUT
 	@Path("/tip/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateFarmingTip(@PathParam("id") Long id, @RequestBody FarmingTips farmingTip) {
-		return farmingTipsService.updateFarmingTip(id, farmingTip);
-	}
-	
-	@PUT
-	@Path("/tip/image/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateFarmingTip(@PathParam("id") Long id,  @RequestBody FarmingTipsRequest farmingTip) {
-		return farmingTipsService.updateFarmingTipWithImage(id, farmingTip);
+		return farmingTipsService.updateFarmingTip(id, farmingTip);
 	}
 }
