@@ -49,7 +49,7 @@ public class PaymentController {
 	}
 	
 	@GET
-	@Path("/payments/ref/{id}")
+	@Path("/payments/ref/offer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
     public Payment getPaymentByOfferId(@PathParam("id") Integer id) {
     	return paymentService.getPaymentByOfferId(id);

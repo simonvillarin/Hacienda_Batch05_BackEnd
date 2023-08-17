@@ -51,25 +51,58 @@ public class AuthenticationService {
 					.role(user.getRole())
 					.status(true)
 					.build();
+			
+			Query<User> query1 = session.createQuery("FROM User WHERE contact = :contact", User.class)
+					.setParameter("contact", user.getContact());
+			User user1 = query1.uniqueResult();
+			if (user1 != null) {
+				return Response.builder()
+						.status(409)
+						.message("Contact number already exists")
+						.timestamp(LocalDateTime.now())
+						.build();
+			}
+			
+			Query<User> query2 = session.createQuery("FROM User WHERE email = :email", User.class)
+					.setParameter("email", user.getEmail());
+			User user2 = query2.uniqueResult();
+			if (user2 != null) {
+				return Response.builder()
+						.status(403)
+						.message("Email already exists")
+						.timestamp(LocalDateTime.now())
+						.build();
+			}
+			
+			Query<User> query3 = session.createQuery("FROM User WHERE username = :username", User.class)
+					.setParameter("username", user.getUsername());
+			User user3 = query3.uniqueResult();
+			if (user3 != null) {
+				return Response.builder()
+						.status(403)
+						.message("Username already exists")
+						.timestamp(LocalDateTime.now())
+						.build();
+			}
 			session.persist(_user);
 			
-			Query<User> query = session.createQuery("FROM User u ORDER BY u.userId DESC", User.class);
-			query.setMaxResults(1);
-			User user1 = query.uniqueResult();
+			Query<User> query4 = session.createQuery("FROM User u ORDER BY u.userId DESC", User.class);
+			query4.setMaxResults(1);
+			User user4 = query4.uniqueResult();
 			
 			if ("Admin".equalsIgnoreCase(user.getRole().name())) {
 				var admin = Admin.builder()
-						.userId(user1.getUserId())
+						.userId(user4.getUserId())
 						.build();
 				session.persist(admin);
 			} else if ("Supplier".equalsIgnoreCase(user.getRole().name())) {
 				var supplier = Supplier.builder()
-						.userId(user1.getUserId())
+						.userId(user4.getUserId())
 						.build();
 				session.persist(supplier);
 			} else {
 				var farmer = Farmer.builder()
-						.userId(user1.getUserId())
+						.userId(user4.getUserId())
 						.build();
 				session.persist(farmer);
 			}
