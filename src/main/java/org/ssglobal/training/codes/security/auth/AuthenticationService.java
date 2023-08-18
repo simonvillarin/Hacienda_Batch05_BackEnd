@@ -42,6 +42,7 @@ public class AuthenticationService {
 					.village(user.getVillage())
 					.barangay(user.getBarangay())
 					.city(user.getCity())
+					.province(user.getProvince())
 					.region(user.getRegion())
 					.zipCode(user.getZipCode())
 					.contact(user.getContact())

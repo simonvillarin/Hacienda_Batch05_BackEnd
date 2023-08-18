@@ -23,6 +23,7 @@ public class UserRequest {
 	private String village;
 	private String barangay;
 	private String city;
+	private String province;
 	private String region;
 	private Integer zipCode;
 	private String contact;

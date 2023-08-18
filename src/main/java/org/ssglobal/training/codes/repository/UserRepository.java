@@ -90,6 +90,9 @@ public class UserRepository {
 				if (user.getCity() != null && user.getCity() != "") {
 					_user.setCity(user.getCity());
 				}
+				if (user.getProvince() != null && user.getProvince() != "") {
+					_user.setProvince(user.getProvince());
+				}
 				if (user.getRegion() != null && user.getRegion() != "") {
 					_user.setRegion(user.getRegion());
 				}

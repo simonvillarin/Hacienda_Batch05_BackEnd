@@ -70,6 +70,9 @@ public class User implements UserDetails {
 	@Column(name = "city")
 	private String city;
 	
+	@Column(name = "province")
+	private String province;
+	
 	@Column(name = "region")
 	private String region;
 	

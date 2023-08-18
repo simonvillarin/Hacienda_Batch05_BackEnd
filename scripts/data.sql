@@ -17,6 +17,7 @@ CREATE TABLE users(
 	village VARCHAR(255),
 	barangay VARCHAR(255),
 	city VARCHAR(255),
+	province VARCHAR(255),
 	region VARCHAR(255),
 	zip_code INT, 
 	contact VARCHAR(20),
