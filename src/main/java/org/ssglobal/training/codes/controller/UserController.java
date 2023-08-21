@@ -33,6 +33,13 @@ public class UserController {
 	}
 	
 	@GET
+	@Path("/user/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserById(@PathParam("id") Long id) {
+		return userService.getUserById(id);
+	}
+	
+	@GET
 	@Path("/farmers")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getAllFarmers() {

@@ -31,6 +31,14 @@ public class UserRepository {
 		}
 	}
 	
+	public User getUserById(Long id) {
+		try (Session session = sf.openSession()) {
+			return session.get(User.class, id);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
 	public List<User> getAllFarmers() {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM User WHERE role = :role", User.class)

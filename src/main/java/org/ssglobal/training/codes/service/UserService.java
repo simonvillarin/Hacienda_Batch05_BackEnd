@@ -21,6 +21,10 @@ public class UserService {
 		return userRepository.getAllUsers();
 	}
 	
+	public User getUserById(Long id) {
+		return userRepository.getUserById(id);
+	}
+	
 	public List<User> getAllFarmers() {
 		return userRepository.getAllFarmers();
 	}

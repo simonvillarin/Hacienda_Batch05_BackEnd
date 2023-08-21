@@ -1,5 +1,6 @@
 package org.ssglobal.training.codes.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class AdvertisementRepository {
 			session.beginTransaction();
 			
 			Advertisement ad = new Advertisement();
+			ad.setPostDate(LocalDate.now());
 			ad.setStatus(true);
 			
 			if (advertisement.getSupplierId() != null) {
@@ -78,11 +80,7 @@ public class AdvertisementRepository {
 							.build();
 					session.persist(img);
 				}
-				
 				ad.setImage(createImageLink(advertisement.getFilename()));
-			}
-			if (advertisement.getPostDate() != null) {
-				ad.setPostDate(advertisement.getPostDate());
 			}
 			session.persist(ad);
 			
@@ -90,7 +88,7 @@ public class AdvertisementRepository {
 			
 			return Response.builder()
 					.status(201)
-					.message("Advertisement successfully created")
+					.message(advertisement.getFilename())
 					.timestamp(LocalDateTime.now())
 					.build();
 		} catch (Exception e) {
