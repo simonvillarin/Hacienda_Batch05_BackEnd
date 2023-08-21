@@ -107,8 +107,8 @@ CREATE TABLE advertisement(
 	category VARCHAR(80),
 	description VARCHAR(80),
 	quantity INT,
-	mass numeric(12, 2),
-	price INT,
+	mass numeric(13, 3),
+	price numeric(13, 3),
 	image TEXT,
 	post_date date,
 	status boolean

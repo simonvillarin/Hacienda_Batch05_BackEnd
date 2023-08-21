@@ -88,7 +88,7 @@ public class AdvertisementRepository {
 			
 			return Response.builder()
 					.status(201)
-					.message(advertisement.getFilename())
+					.message("Advertisement successfully created")
 					.timestamp(LocalDateTime.now())
 					.build();
 		} catch (Exception e) {
@@ -135,7 +135,6 @@ public class AdvertisementRepository {
 								.build();
 						session.persist(img);
 					}
-					
 					ad.setImage(createImageLink(advertisement.getFilename()));
 				}
 				if (advertisement.getPostDate() != null) {
