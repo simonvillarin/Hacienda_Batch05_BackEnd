@@ -25,7 +25,7 @@ public class ComplaintService {
 		return complaintRepository.getComplaintById(id);
 	}
 	
-	public List<Complaint> getComplaintByFarmerId(Integer id) {
+	public List<Complaint> getComplaintByFarmerId(Long id) {
 		return complaintRepository.getComplaintByFarmerId(id);
 	}
 	

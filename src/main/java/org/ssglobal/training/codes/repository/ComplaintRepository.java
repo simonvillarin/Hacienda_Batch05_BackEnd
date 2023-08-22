@@ -1,5 +1,6 @@
 package org.ssglobal.training.codes.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,10 +38,10 @@ public class ComplaintRepository {
 		}
 	}
 	
-	public List<Complaint> getComplaintByFarmerId(Integer id) {
+	public List<Complaint> getComplaintByFarmerId(Long id) {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Complaint WHERE farmerId = :farmerId", Complaint.class)
-					.setParameter("farmerId", id)
+			return session.createQuery("FROM Complaint WHERE userId = :userId", Complaint.class)
+					.setParameter("userId", id)
 					.list();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
@@ -52,6 +53,7 @@ public class ComplaintRepository {
 			session.beginTransaction();
 
 			Complaint comp = new Complaint();
+			comp.setDate(LocalDate.now());
 			comp.setStatus(true);
 			
 			if (complaint.getFarmerId() != null) {
@@ -74,9 +76,6 @@ public class ComplaintRepository {
 			if (complaint.getComplaintDetails() != null && complaint.getComplaintDetails() != "") {
 				comp.setComplaintDetails(complaint.getComplaintDetails());
 			}
-			if (complaint.getDate() != null) {
-				comp.setDate(complaint.getDate());
-			}
 			if (complaint.getFilename() != null && complaint.getFilename() != "") {
 				Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
 						.setParameter("filename", complaint.getFilename());
@@ -92,7 +91,7 @@ public class ComplaintRepository {
 				
 				comp.setImage(createImageLink(complaint.getFilename()));
 			}
-			session.persist(complaint);
+			session.persist(comp);
 			
 			session.getTransaction().commit();
 			
@@ -117,9 +116,6 @@ public class ComplaintRepository {
 				}
 				if (complaint.getComplaintDetails() != null && complaint.getComplaintDetails() != "") {
 					comp.setComplaintDetails(complaint.getComplaintDetails());
-				}
-				if (complaint.getDate() != null) {
-					comp.setDate(complaint.getDate());
 				}
 				if (complaint.getFilename() != null && complaint.getFilename() != "") {
 					Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)

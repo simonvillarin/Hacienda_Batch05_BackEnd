@@ -27,7 +27,7 @@ public class Complaint {
 	private Long complaintId;
 	
 	@Column(name = "farmer_id")
-	private Integer farmerId;
+	private Long farmerId;
 	
 	@Column(name = "complaint_type")
 	private String complaintType;

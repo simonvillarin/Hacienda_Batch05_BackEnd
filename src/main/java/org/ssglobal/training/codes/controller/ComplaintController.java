@@ -43,7 +43,7 @@ public class ComplaintController {
 	@GET
 	@Path("/complaint/farmer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Complaint> getComplaintByFarmerId(@PathParam("id") Integer id) {
+	public List<Complaint> getComplaintByFarmerId(@PathParam("id") Long id) {
 		return complaintService.getComplaintByFarmerId(id);
 	}
 	
