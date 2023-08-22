@@ -108,9 +108,29 @@ public class UserRepository {
 					_user.setZipCode(user.getZipCode());
 				}
 				if (user.getContact() != null && user.getContact() != "") {
+					Query<User> query = session.createQuery("FROM User WHERE contact = :contact", User.class)
+							.setParameter("contact", user.getContact());
+					User user1 = query.uniqueResult();
+					if (user1 != null) {
+						return Response.builder()
+								.status(409)
+								.message("Contact number already exists")
+								.timestamp(LocalDateTime.now())
+								.build();
+					}
 					_user.setContact(user.getContact());
 				}
 				if (user.getEmail() != null && user.getEmail() != "") {
+					Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class)
+							.setParameter("email", user.getEmail());
+					User user1 = query.uniqueResult();
+					if (user1 != null) {
+						return Response.builder()
+								.status(409)
+								.message("Email already exists")
+								.timestamp(LocalDateTime.now())
+								.build();
+					}
 					_user.setEmail(user.getEmail());
 				}
 				if (user.getPassword() != null && user.getPassword() != "") {
