@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.ssglobal.training.codes.enums.Role;
 import org.ssglobal.training.codes.model.Image;
 import org.ssglobal.training.codes.model.User;
 import org.ssglobal.training.codes.request.UserRequest;
@@ -42,7 +43,7 @@ public class UserRepository {
 	public List<User> getAllFarmers() {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM User WHERE role = :role", User.class)
-					.setParameter("role", "Farmer")
+					.setParameter("role", Role.Farmer)
 					.list();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
@@ -52,7 +53,7 @@ public class UserRepository {
 	public List<User> getAllSuppliers() {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM User WHERE role = :role", User.class)
-					.setParameter("role", "Supplier")
+					.setParameter("role", Role.Supplier)
 					.list();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
