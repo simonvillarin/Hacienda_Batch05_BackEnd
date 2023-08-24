@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.ssglobal.training.codes.model.Advertisement;
+import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Image;
 import org.ssglobal.training.codes.request.AdvertisementRequest;
 import org.ssglobal.training.codes.response.Response;
@@ -20,6 +21,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdvertisementRepository {
 	private final SessionFactory sf;
+	
+	public List<Advertisement> getAllAdvertisement() {
+		try (Session session = sf.openSession()) {
+			return session.createQuery("FROM Advertisement", Advertisement.class).list();
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 	
 	public List<Advertisement> getAdvertisementBySupplierId(Integer id) {
 		try (Session session = sf.openSession()) {
@@ -167,4 +176,6 @@ public class AdvertisementRepository {
 	private String createImageLink(String filename) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().replacePath("/api/image/" + filename).toUriString();
 	}
+
+
 }
