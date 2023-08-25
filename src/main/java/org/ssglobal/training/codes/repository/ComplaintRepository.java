@@ -40,8 +40,8 @@ public class ComplaintRepository {
 	
 	public List<Complaint> getComplaintByFarmerId(Long id) {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Complaint WHERE userId = :userId", Complaint.class)
-					.setParameter("userId", id)
+			return session.createQuery("FROM Complaint WHERE complaintId = :complaintId", Complaint.class)
+					.setParameter("complaintId", id)
 					.list();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
