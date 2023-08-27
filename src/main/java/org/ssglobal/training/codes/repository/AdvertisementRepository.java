@@ -2,6 +2,7 @@ package org.ssglobal.training.codes.repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -10,9 +11,10 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.ssglobal.training.codes.model.Advertisement;
-import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Image;
+import org.ssglobal.training.codes.model.User;
 import org.ssglobal.training.codes.request.AdvertisementRequest;
+import org.ssglobal.training.codes.response.AdvertisementResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -22,15 +24,38 @@ import lombok.RequiredArgsConstructor;
 public class AdvertisementRepository {
 	private final SessionFactory sf;
 	
-	public List<Advertisement> getAllAdvertisement() {
+	public List<AdvertisementResponse> getAllAdvertisement() {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Advertisement", Advertisement.class).list();
+			List<Advertisement> ads = session.createQuery("FROM Advertisement", Advertisement.class).list();
+			
+			List<AdvertisementResponse> adsResponse = new ArrayList<>();
+			ads.stream().forEach((ad) -> {
+				Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", ad.getSupplierId());
+				User supplier = query.uniqueResult();
+				
+				AdvertisementResponse adResponse = AdvertisementResponse.builder()
+						.postId(ad.getPostId())
+						.supplier(supplier)
+						.name(ad.getName())
+						.category(ad.getCategory())
+						.description(ad.getDescription())
+						.quantity(ad.getQuantity())
+						.mass(ad.getMass())
+						.price(ad.getPrice())
+						.image(ad.getImage())
+						.postDate(ad.getPostDate())
+						.status(ad.getStatus())
+						.build();
+				adsResponse.add(adResponse);
+			});
+			return adsResponse;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	public List<Advertisement> getAdvertisementBySupplierId(Integer id) {
+	public List<Advertisement> getAdvertisementBySupplierId(Long id) {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM Advertisement WHERE supplierId = :supplierId", Advertisement.class)
 					.setParameter("supplierId", id)

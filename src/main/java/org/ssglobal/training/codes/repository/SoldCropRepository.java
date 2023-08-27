@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.ssglobal.training.codes.model.Offer;
 import org.ssglobal.training.codes.model.SoldCrop;
 import org.ssglobal.training.codes.response.Response;
 

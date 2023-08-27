@@ -27,7 +27,7 @@ public class Advertisement {
 	private Long postId;
 	
 	@Column(name = "supplier_id")
-	private Integer supplierId;
+	private Long supplierId;
 	
 	@Column(name = "name")
 	private String name;

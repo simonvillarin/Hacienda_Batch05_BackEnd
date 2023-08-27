@@ -14,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Advertisement;
-import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.request.AdvertisementRequest;
+import org.ssglobal.training.codes.response.AdvertisementResponse;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.AdvertisementService;
 
@@ -30,14 +30,14 @@ public class AdvertisementController {
 	@GET
 	@Path("/advertisements")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Advertisement> getAllAdvertisement() {
+	public List<AdvertisementResponse> getAllAdvertisement() {
 		return advertisementService.getAllAdvertisement();
 	}
 	
 	@GET
 	@Path("/ad/supplier/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Advertisement> getAdvertisementBySupplierId(@PathParam("id") Integer id) {
+	public List<Advertisement> getAdvertisementBySupplierId(@PathParam("id") Long id) {
 		return advertisementService.getAdvertisementBySupplierId(id);
 	}
 	

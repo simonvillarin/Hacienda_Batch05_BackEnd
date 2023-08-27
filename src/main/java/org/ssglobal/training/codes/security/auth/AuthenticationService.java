@@ -9,10 +9,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.ssglobal.training.codes.model.Admin;
 import org.ssglobal.training.codes.model.Farmer;
+import org.ssglobal.training.codes.model.Image;
 import org.ssglobal.training.codes.model.Supplier;
 import org.ssglobal.training.codes.model.User;
+import org.ssglobal.training.codes.request.UserRequest;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.security.config.JwtService;
 
@@ -26,9 +29,33 @@ public class AuthenticationService {
 	private final AuthenticationManager authManager;
 	private final JwtService jwtService;
 	
-	public Response register(User user) {
+	public Response register(UserRequest user) {
 		try (Session session = sf.openSession()) {
 			session.beginTransaction();
+			
+			Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+					.setParameter("filename", user.getFilename1());
+			Image image = query.uniqueResult();
+			if (image == null) {
+				Image img = Image.builder()
+						.filename(user.getFilename1())
+						.mimeType(user.getMimeType1())
+						.data(user.getData1())
+						.build();
+				session.persist(img);
+			}
+			
+			Query<Image> query5 = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+					.setParameter("filename", user.getFilename2());
+			Image image1 = query5.uniqueResult();
+			if (image1 == null) {
+				Image img = Image.builder()
+						.filename(user.getFilename2())
+						.mimeType(user.getMimeType2())
+						.data(user.getData2())
+						.build();
+				session.persist(img);
+			}
 			
 			var _user = User.builder()
 					.firstName(user.getFirstName())
@@ -44,9 +71,10 @@ public class AuthenticationService {
 					.city(user.getCity())
 					.province(user.getProvince())
 					.region(user.getRegion())
-					.zipCode(user.getZipCode())
 					.contact(user.getContact())
 					.email(user.getEmail())
+					.idFront(createImageLink(user.getFilename1()))
+					.idBack(createImageLink(user.getFilename2()))
 					.username(user.getUsername())
 					.password(passwordEncoder.encode(user.getPassword()))
 					.role(user.getRole())
@@ -138,5 +166,9 @@ public class AuthenticationService {
 					.role(user.getRole().name())
 					.build();
 		}
+	}
+	
+	private String createImageLink(String filename) {
+		return ServletUriComponentsBuilder.fromCurrentRequest().replacePath("/api/image/" + filename).toUriString();
 	}
 }

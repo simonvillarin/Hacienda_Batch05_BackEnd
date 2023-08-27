@@ -11,11 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Payment;
-import org.ssglobal.training.codes.request.OfferRequest;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.PaymentService;
 

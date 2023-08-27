@@ -14,8 +14,6 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Course;
-import org.ssglobal.training.codes.model.FarmingTips;
-import org.ssglobal.training.codes.request.FarmingTipsRequest;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.CourseService;
 

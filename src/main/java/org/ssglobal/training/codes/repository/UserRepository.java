@@ -105,9 +105,6 @@ public class UserRepository {
 				if (user.getRegion() != null && user.getRegion() != "") {
 					_user.setRegion(user.getRegion());
 				}
-				if (user.getZipCode() != null) {
-					_user.setZipCode(user.getZipCode());
-				}
 				if (user.getContact() != null && user.getContact() != "") {
 					Query<User> query = session.createQuery("FROM User WHERE contact = :contact", User.class)
 							.setParameter("contact", user.getContact());

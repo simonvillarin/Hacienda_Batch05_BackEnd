@@ -6,9 +6,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 import org.ssglobal.training.codes.model.Advertisement;
-import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.repository.AdvertisementRepository;
 import org.ssglobal.training.codes.request.AdvertisementRequest;
+import org.ssglobal.training.codes.response.AdvertisementResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -18,11 +18,11 @@ import lombok.RequiredArgsConstructor;
 public class AdvertisementService {
 	private final AdvertisementRepository advertisementRepository;
 	
-	public List<Advertisement> getAllAdvertisement() {
+	public List<AdvertisementResponse> getAllAdvertisement() {
 		return advertisementRepository.getAllAdvertisement();
 	}
 	
-	public List<Advertisement> getAdvertisementBySupplierId(Integer id) {
+	public List<Advertisement> getAdvertisementBySupplierId(Long id) {
 		return advertisementRepository.getAdvertisementBySupplierId(id);
 	}
 	

@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.ssglobal.training.codes.model.User;
+import org.ssglobal.training.codes.request.UserRequest;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AuthenticationController {
 	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(@RequestBody User user) {
+	public Response register(@RequestBody UserRequest user) {
 		return authService.register(user);
 	}
 	

@@ -76,9 +76,6 @@ public class User implements UserDetails {
 	@Column(name = "region")
 	private String region;
 	
-	@Column(name = "zip_code")
-	private Integer zipCode;
-	
 	@Column(name = "contact")
 	private String contact;
 	
@@ -87,6 +84,12 @@ public class User implements UserDetails {
 	
 	@Column(name = "image")
 	private String image;
+	
+	@Column(name = "id_front")
+	private String idFront;
+	
+	@Column(name = "id_back")
+	private String idBack;
 	
 	@Column(name = "username")
 	private String username;
