@@ -78,7 +78,7 @@ public class AuthenticationService {
 					.username(user.getUsername())
 					.password(passwordEncoder.encode(user.getPassword()))
 					.role(user.getRole())
-					.status(true)
+					.status(false)
 					.build();
 			
 			Query<User> query1 = session.createQuery("FROM User WHERE contact = :contact", User.class)
