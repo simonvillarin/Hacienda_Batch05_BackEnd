@@ -14,14 +14,14 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Offer;
-import org.ssglobal.training.codes.request.OfferRequest;
+import org.ssglobal.training.codes.response.OfferResponse;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.OfferService;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
-@Path("/offer")
+@Path("/farming")
 @RequiredArgsConstructor
 public class OfferController {
 	private final OfferService offerService;
@@ -43,8 +43,15 @@ public class OfferController {
 	@GET
 	@Path("/offers/farmer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Offer> getOfferByFarmerId(@PathParam("id") Integer id) {
+	public List<OfferResponse> getOfferByFarmerId(@PathParam("id") Long id) {
 		return offerService.getOfferByFarmerId(id);
+	}
+	
+	@GET
+	@Path("/offers/supplier/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<OfferResponse> getOfferBySupplierId(@PathParam("id") Long id) {
+		return offerService.getOfferBySupplierId(id);
 	}
 	
 	@GET
@@ -58,7 +65,7 @@ public class OfferController {
 	@Path("/offers")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addComplaint(@RequestBody OfferRequest offer) {
+	public Response addComplaint(@RequestBody Offer offer) {
 		return offerService.addOffer(offer);
 	}
 	
@@ -66,7 +73,7 @@ public class OfferController {
 	@Path("/offers/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateComplaint(@PathParam("id") Long id, @RequestBody OfferRequest complaint) {
+	public Response updateComplaint(@PathParam("id") Long id, @RequestBody Offer complaint) {
 		return offerService.updateOffer(id, complaint);
 	}
 }

@@ -1,7 +1,5 @@
 package org.ssglobal.training.codes.request;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OfferRequest {
-	private Integer farmerId;
-	private Integer postId;
+	private Long farmerId;
+	private Long supplierId;
+	private Long postId;
 	private Integer quantity;
-	private Integer price;
-	private LocalDate offerDate;
+	private Double mass;
+	private Double price;
+	private Boolean isViewed;
 }

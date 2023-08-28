@@ -1,6 +1,7 @@
 package org.ssglobal.training.codes.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,18 +27,30 @@ public class Offer {
 	@Column(name = "offer_id")
 	private Long offerId;
 	
-	@Column(name = "post_id")
-	private Integer postId;
-	
 	@Column(name = "farmer_id")
-	private Integer farmerId;
+	private Long farmerId;
+	
+	@Column(name = "supplier_id")
+	private Long supplierId;
+	
+	@Column(name = "post_id")
+	private Long postId;
 	
 	@Column(name = "quantity")
 	private Integer quantity;
 	
+	@Column(name = "mass")
+	private Double mass;
+	
 	@Column(name = "price")
-	private Integer price;
+	private Double price;
 	
 	@Column(name = "offer_date")
 	private LocalDate offerDate;
+	
+	@Column(name = "offer_time")
+	private LocalTime offerTime;
+	
+	@Column(name = "is_viewed")
+	private Boolean isViewed;
 }

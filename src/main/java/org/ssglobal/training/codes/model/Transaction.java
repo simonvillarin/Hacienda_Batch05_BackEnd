@@ -20,28 +20,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "payment")
-public class Payment {
+@Table(name = "transaction")
+public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "payment_id")
-	private Long paymentId;
-	
-	@Column(name = "order_id_ref")
-	private String orderIdRef;
-	
 	@Column(name = "transaction_id")
 	private Long transactionId;
 	
-	@Column(name = "payment_mode")
-	private String paymentMode;
+	@Column(name = "supplier_id")
+	private Long supplierId;
 	
-	@Column(name = "payment_date")
-	private LocalDate paymentDate;
+	@Column(name = "farmer_id")
+	private Long farmerId;
 	
-	@Column(name = "payment_time")
-	private LocalTime paymentTime;
+	@Column(name = "offer_id")
+	private Long offerId;
+	
+	@Column(name = "accept_date")
+	private LocalDate acceptDate;
+	
+	@Column(name = "accept_time")
+	private LocalTime acceptTime;
+	
+	@Column(name = "paid_date")
+	private LocalDate paidDate;
+	
+	@Column(name = "paid_time")
+	private LocalTime paidTime;
+	
+	@Column(name = "deliver_date")
+	private LocalDate deliverDate;
+	
+	@Column(name = "deliver_time")
+	private LocalTime deliverTime;
 	
 	@Column(name = "status")
 	private Boolean status;
+	
+	@Column(name = "is_viewed")
+	private Boolean isViewed;
 }

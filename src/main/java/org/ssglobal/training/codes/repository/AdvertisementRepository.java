@@ -46,6 +46,7 @@ public class AdvertisementRepository {
 						.image(ad.getImage())
 						.postDate(ad.getPostDate())
 						.status(ad.getStatus())
+						.transaction(ad.getTransaction())
 						.build();
 				adsResponse.add(adResponse);
 			});
@@ -80,6 +81,7 @@ public class AdvertisementRepository {
 			Advertisement ad = new Advertisement();
 			ad.setPostDate(LocalDate.now());
 			ad.setStatus(true);
+			ad.setTransaction(false);
 			
 			if (advertisement.getSupplierId() != null) {
 				ad.setSupplierId(advertisement.getSupplierId());
@@ -177,7 +179,10 @@ public class AdvertisementRepository {
 				if (advertisement.getStatus() != null) {
 					ad.setStatus(advertisement.getStatus());
 				}
-				
+				if (advertisement.getTransaction() != null) {
+					ad.setTransaction(advertisement.getTransaction());
+				}
+				 
 				session.getTransaction().commit();
 				
 				return Response.builder()

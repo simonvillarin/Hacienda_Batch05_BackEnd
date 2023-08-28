@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.ssglobal.training.codes.model.Offer;
 import org.ssglobal.training.codes.repository.OfferRepository;
-import org.ssglobal.training.codes.request.OfferRequest;
+import org.ssglobal.training.codes.response.OfferResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,12 @@ public class OfferService {
 		return offerRepository.getOfferById(id);
 	}
 	
-	public List<Offer> getOfferByFarmerId(Integer id) {
+	public List<OfferResponse> getOfferByFarmerId(Long id) {
 		return offerRepository.getOfferByFarmerId(id);
+	}
+	
+	public List<OfferResponse> getOfferBySupplierId(Long id) {
+		return offerRepository.getOfferBySupplierId(id);
 	}
 	
 	public List<Offer> getOfferByPostId(Integer id) {
@@ -34,12 +38,12 @@ public class OfferService {
 	}
 	
 	@Transactional
-	public Response addOffer(OfferRequest offer) {
+	public Response addOffer(Offer offer) {
 		return offerRepository.addOffer(offer);
 	}
 	
 	@Transactional
-	public Response updateOffer(Long id, OfferRequest offer) {
+	public Response updateOffer(Long id, Offer offer) {
 		return offerRepository.updateOffer(id, offer);
 	}
 }

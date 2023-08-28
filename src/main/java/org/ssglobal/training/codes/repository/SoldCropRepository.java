@@ -87,8 +87,6 @@ public class SoldCropRepository {
 	                        .timestamp(LocalDateTime.now())
 	                        .build();
 	            }
-
-
 	            if (soldCrop.getOfferId() != null && soldCrop.getOfferId() <= 0) {
 	                return Response.builder()
 	                        .status(400)
@@ -96,12 +94,9 @@ public class SoldCropRepository {
 	                        .timestamp(LocalDateTime.now())
 	                        .build();
 	            }
-
 	            if (soldCrop.getOfferId() != null) {
 	                existingSoldCrop.setOfferId(soldCrop.getOfferId());
 	            }
-
-	            session.update(existingSoldCrop);
 
 	            session.getTransaction().commit();
 

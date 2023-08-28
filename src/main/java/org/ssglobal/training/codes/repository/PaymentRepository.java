@@ -2,12 +2,16 @@ package org.ssglobal.training.codes.repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.Random;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.ssglobal.training.codes.model.Payment;
+import org.ssglobal.training.codes.model.Transaction;
+import org.ssglobal.training.codes.response.PaymentResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -17,15 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class PaymentRepository {
 	private final SessionFactory sf;
 	
-	public List<Payment> getAllPayment() {
-		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Payment", Payment.class).list();
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
-	
-	public Payment getPaymentById(Integer id) {
+	public Payment getPaymentById(Long id) {
 		try (Session session = sf.openSession()) {
 			return session.get(Payment.class, id);
 		} catch (Exception e) {
@@ -33,47 +29,40 @@ public class PaymentRepository {
 		}
 	}
 	
-    public Payment getPaymentByOrderIdRef(Integer orderIdRef) {
-        try (Session session = sf.openSession()) {
-            return session.createQuery("FROM Payment WHERE order_id_ref = :orderIdRef", Payment.class)
-                .setParameter("orderIdRef", orderIdRef)
-                .uniqueResult();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-    
-    public Payment getPaymentByOfferId(Integer offerId) {
-        try (Session session = sf.openSession()) {
-            return session.createQuery("FROM Payment WHERE offer_id = :offerId", Payment.class)
-                .setParameter("offerId", offerId)
-                .uniqueResult();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-    
+	public PaymentResponse getPaymentByTransactionId(Long id) {
+		try (Session session = sf.openSession()) {
+			Query<Payment> query = session.createQuery("FROM Payment WHERE transactionId = :transactionId", Payment.class)
+					.setParameter("transactionId", id);
+			Payment payment = query.uniqueResult();
+			
+			Transaction transaction = session.get(Transaction.class, payment.getTransactionId());
+			
+			return PaymentResponse.builder()
+					.paymentId(payment.getPaymentId())
+					.orderIdRef(payment.getOrderIdRef())
+					.transaction(transaction)
+					.paymentMode(payment.getPaymentMode())
+					.paymentDate(payment.getPaymentDate())
+					.paymentTime(payment.getPaymentTime())
+					.status(payment.getStatus())
+					.build();
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+     
     public Response addPayment(Payment payment) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
 
-            // Validate input fields
-            if (payment.getOrderIdRef() == null || payment.getOrderIdRef() <= 0) {
+            if (payment.getTransactionId() == null || payment.getTransactionId() <= 0 ) {
                 return Response.builder()
                         .status(400)
-                        .message("Invalid Order ID Reference")
+                        .message("Invalid transaction Id")
                         .timestamp(LocalDateTime.now())
                         .build();
             }
-            
-            if (payment.getOfferId() == null || payment.getOfferId() <= 0) {
-                return Response.builder()
-                        .status(400)
-                        .message("Invalid Offer ID")
-                        .timestamp(LocalDateTime.now())
-                        .build();
-            }
-            
             if (payment.getPaymentMode() == null || payment.getPaymentMode().isEmpty()) {
                 return Response.builder()
                         .status(400)
@@ -83,10 +72,11 @@ public class PaymentRepository {
             }
             
             Payment newPayment = Payment.builder()
-                    .orderIdRef(payment.getOrderIdRef())
-                    .offerId(payment.getOfferId())
+                    .orderIdRef(generateOrderIdRef())
+                    .transactionId(payment.getTransactionId())
                     .paymentMode(payment.getPaymentMode())
                     .paymentDate(LocalDate.now())
+                    .paymentTime(LocalTime.now())
                     .status(true)
                     .build();
 
@@ -104,53 +94,19 @@ public class PaymentRepository {
         }
     }
     
-    public Response updatePayment(Integer id, Payment payment) {
+    public Response updatePayment(Long id, Payment payment) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             
             Payment existingPayment = session.get(Payment.class, id);
-
-            if (existingPayment == null) {
-                return Response.builder()
-                        .status(404)
-                        .message("Payment not found")
-                        .timestamp(LocalDateTime.now())
-                        .build();
-            }
-
-            if (payment.getOrderIdRef() != null && payment.getOrderIdRef() <= 0) {
-                return Response.builder()
-                        .status(400)
-                        .message("Invalid Order ID Reference")
-                        .timestamp(LocalDateTime.now())
-                        .build();
-            }
             
-            if (payment.getOfferId() != null && payment.getOfferId() <= 0) {
-                return Response.builder()
-                        .status(400)
-                        .message("Invalid Offer ID")
-                        .timestamp(LocalDateTime.now())
-                        .build();
-            }
-            
-            if (payment.getPaymentMode() != null && payment.getPaymentMode().isEmpty()) {
-                return Response.builder()
-                        .status(400)
-                        .message("Invalid Payment Mode")
-                        .timestamp(LocalDateTime.now())
-                        .build();
-            }
-            
-            if (payment.getOrderIdRef() != null) {
-                existingPayment.setOrderIdRef(payment.getOrderIdRef());
-            }
-            if (payment.getOfferId() != null) {
-                existingPayment.setOfferId(payment.getOfferId());
-            }
             if (payment.getPaymentMode() != null) {
                 existingPayment.setPaymentMode(payment.getPaymentMode());
             }
+            if (payment.getStatus() != null) {
+                existingPayment.setStatus(payment.getStatus());
+            }
+            
             session.update(existingPayment);
             session.getTransaction().commit();
 
@@ -162,5 +118,15 @@ public class PaymentRepository {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+    
+    public String generateOrderIdRef() {
+        long timestamp = System.currentTimeMillis();
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(10000);
+        String orderIdRef = "ORD" + timestamp + randomNumber;
+
+        return orderIdRef;
     }
 }

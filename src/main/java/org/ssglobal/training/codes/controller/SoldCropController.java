@@ -19,34 +19,34 @@ import org.ssglobal.training.codes.service.SoldCropService;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@Path("/sold")
+@Path("/farming")
 @RequiredArgsConstructor
 public class SoldCropController {
 	private final SoldCropService cropService;
 	
 	@GET
-	@Path("/get")
+	@Path("/solds")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<SoldCrop> getAllSoldCrop() {
 		return cropService.getAllSoldCrop();
 	}
 	
 	@GET
-	@Path("/get/{id}")
+	@Path("/sold/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public SoldCrop getSoldCropById(@PathParam("id") Long id) {
 		return cropService.getSoldCropById(id);
 	}
 	
 	@GET
-	@Path("/get/offer/{id}")
+	@Path("/sold/get/offer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<SoldCrop> getSolfCropByOfferId(@PathParam("id") Integer id) {
 		return cropService.getSolfCropByOfferId(id);
 	}
 	
 	@POST
-	@Path("/crop")
+	@Path("/sold/crop")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addSoldCrop(SoldCrop soldCrop) {
@@ -54,7 +54,7 @@ public class SoldCropController {
 	}
 	
 	@PUT
-	@Path("/crop/{id}")
+	@Path("/sold/crop/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateSoldCrop(@PathParam("id") Long id, SoldCrop soldCrop) {

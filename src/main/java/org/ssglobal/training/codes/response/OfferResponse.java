@@ -1,7 +1,9 @@
 package org.ssglobal.training.codes.response;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
+import org.ssglobal.training.codes.model.Advertisement;
 import org.ssglobal.training.codes.model.User;
 
 import lombok.AllArgsConstructor;
@@ -13,17 +15,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdvertisementResponse {
-	private Long postId;
+public class OfferResponse {
+	private Long offerId;
+	private User farmer;
 	private User supplier;
-	private String name;
-	private String category;
-	private String description;
+	private Advertisement advertisement;
 	private Integer quantity;
 	private Double mass;
 	private Double price;
-	private String image;
-	private LocalDate postDate;
-	private Boolean status;
-	private Boolean transaction;
+	private LocalDate offerDate;
+	private LocalTime offerTime;
+	private Boolean isViewed;	
 }

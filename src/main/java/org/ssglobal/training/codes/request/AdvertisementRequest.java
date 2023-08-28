@@ -24,4 +24,5 @@ public class AdvertisementRequest {
 	private byte[] data;
 	private LocalDate postDate;
 	private Boolean status;
+	private Boolean transaction;
 }

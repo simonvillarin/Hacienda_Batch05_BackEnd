@@ -1,7 +1,5 @@
 package org.ssglobal.training.codes.controller;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,47 +12,34 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Payment;
+import org.ssglobal.training.codes.response.PaymentResponse;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.PaymentService;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
-@Path("/payment")
+@Path("/farming")
 @RequiredArgsConstructor
 public class PaymentController {
 	private final PaymentService paymentService;
-	
+
 	@GET
-	@Path("/payments")
+	@Path("/payment/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Payment> getAllPayment() {
-		return paymentService.getAllPayment();
-	}
-	
-	@GET
-	@Path("/payments/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Payment getPaymentById(@PathParam("id") Integer id) {
+	public Payment getPaymentById(@PathParam("id") Long id) {
 		return paymentService.getPaymentById(id);
 	}
-	
+
 	@GET
-	@Path("/payments/ref/{id}")
+	@Path("/payment/transaction/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Payment getPaymentByOrderRefId(@PathParam("id") Integer id) {
-		return paymentService.getPaymentByOrderIdRef(id);
+	public PaymentResponse getPaymentByTransactionId(@PathParam("id") Long id) {
+		return paymentService.getPaymentByTransactionId(id);
 	}
 	
-	@GET
-	@Path("/payments/ref/offer/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-    public Payment getPaymentByOfferId(@PathParam("id") Integer id) {
-    	return paymentService.getPaymentByOfferId(id);
-    }
-	
 	@POST
-	@Path("/payments")
+	@Path("/payment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addPayment(@RequestBody Payment payment) {
@@ -62,10 +47,10 @@ public class PaymentController {
 	}
 	
 	@PUT
-	@Path("/payments/{id}")
+	@Path("/payment/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updatePayment(@PathParam("id") Integer id, @RequestBody Payment complaint) {
+	public Response updatePayment(@PathParam("id") Long id, @RequestBody Payment complaint) {
 		return paymentService.updatePayment(id, complaint);
 	}
 }

@@ -112,26 +112,48 @@ CREATE TABLE advertisement(
 	price numeric(13, 3),
 	image TEXT,
 	post_date date,
-	status boolean
+	status boolean,
+	transaction boolean
 );
 
 drop table if exists offer;
 CREATE TABLE offer(
 	offer_id SERIAL,
-	post_id INT,
 	farmer_id INT,
+	supplier_id INT,
+	post_id INT,
 	quantity INT,
-	price INT,
-	offer_date date
+	mass numeric(13, 3),
+	price numeric(13, 3),
+	offer_date date,
+	offer_time time,
+	is_viewed boolean
+);
+
+drop table if exists transaction;
+create table transaction(
+	transaction_id SERIAL,
+	supplier_id INT,
+	farmer_id INT,
+	offer_id INT,
+	accept_date date,
+	accept_time time,
+	paid_date date,
+	paid_time time,
+	deliver_date date,
+	deliver_time time,
+	status boolean,
+	is_viewed BOOLEAN
 );
 
 drop table if exists payment;
 CREATE TABLE payment(
 	payment_id SERIAL,
-	order_id_ref INT,
-	offer_id INT,
-	payment_mode VARCHAR(20),
+	order_id_ref VARCHAR(80),
+	transaction_id INT,
+	payment_mode VARCHAR(80),
 	payment_date date,
+	payment_time time,
 	status boolean
 );
 
