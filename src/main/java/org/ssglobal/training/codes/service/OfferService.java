@@ -46,4 +46,9 @@ public class OfferService {
 	public Response updateOffer(Long id, Offer offer) {
 		return offerRepository.updateOffer(id, offer);
 	}
+	
+	@Transactional
+	public Response deleteOffer(Long id) {
+		return offerRepository.deleteOffer(id);
+	}
 }

@@ -1,5 +1,7 @@
 package org.ssglobal.training.codes.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -15,8 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class TransactionService {
 	private final TransactionRepository transactionRepository;
 	
-	public TransactionResponse getTransactionById(Long id) {
-		return transactionRepository.getTransactionById(id);
+	public List<TransactionResponse> getTransactionBySupplierId(Long id) {
+		return transactionRepository.getTransactionBySupplierId(id);
+	}
+	
+	public List<TransactionResponse> getTransactionByFarmerId(Long id) {
+		return transactionRepository.getTransactionByFarmerId(id);
 	}
 	
 	@Transactional

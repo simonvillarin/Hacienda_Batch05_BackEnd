@@ -3,6 +3,7 @@ package org.ssglobal.training.codes.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -65,7 +66,7 @@ public class OfferController {
 	@Path("/offers")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addComplaint(@RequestBody Offer offer) {
+	public Response addOffer(@RequestBody Offer offer) {
 		return offerService.addOffer(offer);
 	}
 	
@@ -73,7 +74,14 @@ public class OfferController {
 	@Path("/offers/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateComplaint(@PathParam("id") Long id, @RequestBody Offer complaint) {
+	public Response updateOffer(@PathParam("id") Long id, @RequestBody Offer complaint) {
 		return offerService.updateOffer(id, complaint);
+	}
+	
+	@DELETE
+	@Path("/offers/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteOffer(@PathParam("id") Long id) {
+		return offerService.deleteOffer(id);
 	}
 }

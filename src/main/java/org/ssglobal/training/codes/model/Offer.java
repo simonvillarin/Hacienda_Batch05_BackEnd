@@ -51,6 +51,9 @@ public class Offer {
 	@Column(name = "offer_time")
 	private LocalTime offerTime;
 	
+	@Column(name = "is_accepted")
+	private Boolean isAccepted;
+	
 	@Column(name = "is_viewed")
 	private Boolean isViewed;
 }

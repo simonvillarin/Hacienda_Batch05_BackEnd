@@ -3,6 +3,8 @@ package org.ssglobal.training.codes.repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,50 +25,113 @@ import lombok.RequiredArgsConstructor;
 public class TransactionRepository {
 	private final SessionFactory sf;
 	
-	public TransactionResponse getTransactionById(Long id) {
+	public List<TransactionResponse> getTransactionBySupplierId(Long id) {
 		try (Session session = sf.openSession()) {
-			Transaction transaction = session.get(Transaction.class, id);
+			List<Transaction> transactions = session.createQuery("FROM Transaction WHERE supplierId = :supplierId", Transaction.class)
+					.setParameter("supplierId", id)
+					.list();
 			
-			Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
-					.setParameter("userId", transaction.getSupplierId());
-			User supplier = query.uniqueResult();
+			List<TransactionResponse> transactionReponses = new ArrayList<>();
+			transactions.stream().forEach(transaction -> {
+				Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", transaction.getSupplierId());
+				User supplier = query.uniqueResult();
+				
+				Query<User> query1 = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", transaction.getFarmerId());
+				User farmer = query1.uniqueResult();
+				
+				Offer offer = session.get(Offer.class, transaction.getOfferId());
+				
+				Advertisement advertisement = session.get(Advertisement.class, offer.getPostId());
+				
+				OfferResponse offerResponse = OfferResponse.builder()
+						.offerId(offer.getOfferId())
+						.farmer(farmer)
+						.supplier(supplier)
+						.advertisement(advertisement)
+						.quantity(offer.getQuantity())
+						.mass(offer.getMass())
+						.price(offer.getPrice())
+						.offerDate(offer.getOfferDate())
+						.offerTime(offer.getOfferTime())
+						.isViewed(offer.getIsViewed())
+						.build();
+				
+				TransactionResponse transactionResponse = TransactionResponse.builder()
+						.transactionId(transaction.getTransactionId())
+						.supplier(supplier)
+						.farmer(farmer)
+						.offer(offerResponse)
+						.acceptDate(transaction.getAcceptDate())
+						.acceptTime(transaction.getAcceptTime())
+						.paidDate(transaction.getPaidDate())
+						.paidTime(transaction.getPaidTime())
+						.deliverDate(transaction.getDeliverDate())
+						.deliverTime(transaction.getDeliverTime())
+						.status(transaction.getStatus())
+						.isViewed(transaction.getIsViewed())
+						.build();
+				transactionReponses.add(transactionResponse);
+			});
 			
-			Query<User> query1 = session.createQuery("FROM User WHERE userId = :userId", User.class)
-					.setParameter("userId", transaction.getFarmerId());
-			User farmer = query1.uniqueResult();
+			return transactionReponses;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public List<TransactionResponse> getTransactionByFarmerId(Long id) {
+		try (Session session = sf.openSession()) {
+			List<Transaction> transactions = session.createQuery("FROM Transaction WHERE farmerId = :farmerId", Transaction.class)
+					.setParameter("farmerId", id)
+					.list();
 			
-			Offer offer = session.get(Offer.class, transaction.getOfferId());
+			List<TransactionResponse> transactionReponses = new ArrayList<>();
+			transactions.stream().forEach(transaction -> {
+				Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", transaction.getSupplierId());
+				User supplier = query.uniqueResult();
+				
+				Query<User> query1 = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", transaction.getFarmerId());
+				User farmer = query1.uniqueResult();
+				
+				Offer offer = session.get(Offer.class, transaction.getOfferId());
+				
+				Advertisement advertisement = session.get(Advertisement.class, offer.getPostId());
+				
+				OfferResponse offerResponse = OfferResponse.builder()
+						.offerId(offer.getOfferId())
+						.farmer(farmer)
+						.supplier(supplier)
+						.advertisement(advertisement)
+						.quantity(offer.getQuantity())
+						.mass(offer.getMass())
+						.price(offer.getPrice())
+						.offerDate(offer.getOfferDate())
+						.offerTime(offer.getOfferTime())
+						.isViewed(offer.getIsViewed())
+						.build();
+				
+				TransactionResponse transactionResponse = TransactionResponse.builder()
+						.transactionId(transaction.getTransactionId())
+						.supplier(supplier)
+						.farmer(farmer)
+						.offer(offerResponse)
+						.acceptDate(transaction.getAcceptDate())
+						.acceptTime(transaction.getAcceptTime())
+						.paidDate(transaction.getPaidDate())
+						.paidTime(transaction.getPaidTime())
+						.deliverDate(transaction.getDeliverDate())
+						.deliverTime(transaction.getDeliverTime())
+						.status(transaction.getStatus())
+						.isViewed(transaction.getIsViewed())
+						.build();
+				transactionReponses.add(transactionResponse);
+			});
 			
-			Query<Advertisement> query2 = session.createQuery("FROM Advertisement WHERE postId = :postId", Advertisement.class)
-					.setParameter("postId", offer.getPostId());
-			Advertisement advertisement = query2.uniqueResult();
-			
-			OfferResponse offerResponse = OfferResponse.builder()
-					.farmer(farmer)
-					.supplier(supplier)
-					.advertisement(advertisement)
-					.quantity(offer.getQuantity())
-					.mass(offer.getMass())
-					.price(offer.getPrice())
-					.offerDate(offer.getOfferDate())
-					.offerTime(offer.getOfferTime())
-					.isViewed(offer.getIsViewed())
-					.build();
-			
-			return TransactionResponse.builder()
-					.transactionId(transaction.getTransactionId())
-					.supplier(supplier)
-					.farmer(farmer)
-					.offer(offerResponse)
-					.acceptDate(transaction.getAcceptDate())
-					.acceptTime(transaction.getAcceptTime())
-					.paidDate(transaction.getPaidDate())
-					.paidTime(transaction.getPaidTime())
-					.deliverDate(transaction.getDeliverDate())
-					.deliverTime(transaction.getDeliverTime())
-					.status(transaction.getStatus())
-					.isViewed(transaction.getIsViewed())
-					.build();
+			return transactionReponses;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -172,7 +237,7 @@ public class TransactionRepository {
 
             return Response.builder()
                     .status(201)
-                    .message("Transaction successfully updated")
+                    .message("Transaction successfully deleted")
                     .timestamp(LocalDateTime.now())
                     .build();
         } catch (Exception e) {

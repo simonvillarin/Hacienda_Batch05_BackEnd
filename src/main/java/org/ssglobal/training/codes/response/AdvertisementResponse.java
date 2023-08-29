@@ -25,5 +25,5 @@ public class AdvertisementResponse {
 	private String image;
 	private LocalDate postDate;
 	private Boolean status;
-	private Boolean transaction;
+	private Boolean isOffered;
 }

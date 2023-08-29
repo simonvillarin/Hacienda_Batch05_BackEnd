@@ -16,5 +16,6 @@ public class OfferRequest {
 	private Integer quantity;
 	private Double mass;
 	private Double price;
+	private Boolean isAccepted;
 	private Boolean isViewed;
 }

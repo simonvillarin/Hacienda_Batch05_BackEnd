@@ -25,5 +25,6 @@ public class OfferResponse {
 	private Double price;
 	private LocalDate offerDate;
 	private LocalTime offerTime;
+	private Boolean isAccepted;
 	private Boolean isViewed;	
 }

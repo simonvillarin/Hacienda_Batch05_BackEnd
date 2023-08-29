@@ -56,6 +56,6 @@ public class Advertisement {
 	@Column(name = "status")
 	private Boolean status;
 	
-	@Column(name = "transaction")
-	private Boolean transaction;
+	@Column(name = "is_offered")
+	private Boolean isOffered;
 }

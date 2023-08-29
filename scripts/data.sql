@@ -113,7 +113,7 @@ CREATE TABLE advertisement(
 	image TEXT,
 	post_date date,
 	status boolean,
-	transaction boolean
+	is_offered boolean
 );
 
 drop table if exists offer;
@@ -127,6 +127,7 @@ CREATE TABLE offer(
 	price numeric(13, 3),
 	offer_date date,
 	offer_time time,
+	is_accepted boolean,
 	is_viewed boolean
 );
 

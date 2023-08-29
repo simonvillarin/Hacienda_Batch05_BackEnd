@@ -60,6 +60,7 @@ public class OfferRepository {
 				Advertisement advertisement = query2.uniqueResult();
 				
 				OfferResponse offerResponse = OfferResponse.builder()
+						.offerId(offer.getOfferId())
 						.farmer(farmer)
 						.supplier(supplier)
 						.advertisement(advertisement)
@@ -68,6 +69,7 @@ public class OfferRepository {
 						.price(offer.getPrice())
 						.offerDate(offer.getOfferDate())
 						.offerTime(offer.getOfferTime())
+						.isAccepted(offer.getIsAccepted())
 						.isViewed(offer.getIsViewed())
 						.build();
 				
@@ -101,6 +103,7 @@ public class OfferRepository {
 				Advertisement advertisement = query2.uniqueResult();
 				
 				OfferResponse offerResponse = OfferResponse.builder()
+						.offerId(offer.getOfferId())
 						.farmer(farmer)
 						.supplier(supplier)
 						.advertisement(advertisement)
@@ -109,6 +112,7 @@ public class OfferRepository {
 						.price(offer.getPrice())
 						.offerDate(offer.getOfferDate())
 						.offerTime(offer.getOfferTime())
+						.isAccepted(offer.getIsAccepted())
 						.isViewed(offer.getIsViewed())
 						.build();
 				
@@ -176,9 +180,11 @@ public class OfferRepository {
 	                .farmerId(offer.getFarmerId())
 	                .supplierId(offer.getSupplierId())
 	                .quantity(offer.getQuantity())
+	                .mass(offer.getMass())
 	                .price(offer.getPrice())
 	                .offerDate(LocalDate.now())
 	                .offerTime(LocalTime.now())
+	                .isAccepted(false)
 	                .isViewed(false)
 	                .build();
 
@@ -209,41 +215,6 @@ public class OfferRepository {
 	                    .timestamp(LocalDateTime.now())
 	                    .build();
 	        }
-	        if (offer.getPostId() == null && offer.getPostId() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Post ID")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
-	        }
-	        if (offer.getFarmerId() == null && offer.getFarmerId() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Farmer Id")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
-	        }
-	        if (offer.getSupplierId() == null && offer.getSupplierId() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Supplier Id")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
-	        }
-	        if (offer.getQuantity() != null && offer.getQuantity() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Quantity")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
-	        }
-	        if (offer.getPrice() != null && offer.getPrice() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Price")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
-	        }
 	        
 	        if (offer.getPostId() != null) {
 	            existingOffer.setPostId(offer.getPostId());
@@ -263,6 +234,9 @@ public class OfferRepository {
 	        if (offer.getPrice() != null) {
 	            existingOffer.setPrice(offer.getPrice());
 	        }
+	        if (offer.getIsAccepted() != null) {
+	        	existingOffer.setIsAccepted(offer.getIsAccepted());
+	        }
 	        if (offer.getIsViewed() != null) {
 	            existingOffer.setIsViewed(offer.getIsViewed());
 	        }
@@ -277,5 +251,27 @@ public class OfferRepository {
 	    } catch (Exception e) {
 	        throw new RuntimeException(e.getMessage());
 	    }
+	}
+	
+	public Response deleteOffer(Long id) {
+		try (Session session = sf.openSession()) {
+            session.beginTransaction();
+
+            Offer offer = session.get(Offer.class, id);
+            
+            if (offer != null) {
+            	session.delete(offer);
+            }
+
+            session.getTransaction().commit();
+
+            return Response.builder()
+                    .status(201)
+                    .message("Offer successfully deleted")
+                    .timestamp(LocalDateTime.now())
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
 	}
 }

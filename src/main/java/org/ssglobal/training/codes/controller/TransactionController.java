@@ -1,5 +1,7 @@
 package org.ssglobal.training.codes.controller;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,10 +28,17 @@ public class TransactionController {
 	private final TransactionService transactionService;
 	
 	@GET
-	@Path("/transaction/{id}")
+	@Path("/transaction/supplier/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionResponse getTransactionById(@PathParam("id") Long id) {
-		return transactionService.getTransactionById(id);
+	public List<TransactionResponse> getTransactionBySupplierId(@PathParam("id") Long id) {
+		return transactionService.getTransactionBySupplierId(id);
+	}
+	
+	@GET
+	@Path("/transaction/farmer/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TransactionResponse> getTransactionByFarmerId(@PathParam("id") Long id) {
+		return transactionService.getTransactionByFarmerId(id);
 	}
 	
 	@POST
@@ -50,7 +59,6 @@ public class TransactionController {
 	
 	@DELETE
 	@Path("/transaction/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteTransaction(@PathParam("id") Long id) {
 		return transactionService.deleteTransaction(id);
