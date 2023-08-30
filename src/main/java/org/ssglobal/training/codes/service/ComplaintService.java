@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.ssglobal.training.codes.model.Complaint;
 import org.ssglobal.training.codes.repository.ComplaintRepository;
 import org.ssglobal.training.codes.request.ComplaintRequest;
+import org.ssglobal.training.codes.response.ComplaintResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class ComplaintService {
 	private final ComplaintRepository complaintRepository;
 	
-	public List<Complaint> getAllComplaints() {
+	public List<ComplaintResponse> getAllComplaints() {
 		return complaintRepository.getAllComplaints();
 	}
 	
@@ -25,7 +26,7 @@ public class ComplaintService {
 		return complaintRepository.getComplaintById(id);
 	}
 	
-	public List<Complaint> getComplaintByFarmerId(Long id) {
+	public List<ComplaintResponse> getComplaintByFarmerId(Long id) {
 		return complaintRepository.getComplaintByFarmerId(id);
 	}
 	
@@ -37,5 +38,10 @@ public class ComplaintService {
 	@Transactional
 	public Response updateComplaint(Long id, ComplaintRequest complaint) {
 		return complaintRepository.updateComplaint(id, complaint);
+	}
+	
+	@Transactional
+	public Response deleteComplaint(Long id) {
+		return complaintRepository.deleteComplaint(id);
 	}
 }

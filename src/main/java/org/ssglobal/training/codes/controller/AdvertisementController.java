@@ -37,7 +37,7 @@ public class AdvertisementController {
 	@GET
 	@Path("/ad/supplier/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Advertisement> getAdvertisementBySupplierId(@PathParam("id") Long id) {
+	public List<AdvertisementResponse> getAdvertisementBySupplierId(@PathParam("id") Long id) {
 		return advertisementService.getAdvertisementBySupplierId(id);
 	}
 	

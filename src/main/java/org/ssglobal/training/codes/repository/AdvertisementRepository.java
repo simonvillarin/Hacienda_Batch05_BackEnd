@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.ssglobal.training.codes.model.Advertisement;
 import org.ssglobal.training.codes.model.Image;
+import org.ssglobal.training.codes.model.Offer;
 import org.ssglobal.training.codes.model.User;
 import org.ssglobal.training.codes.request.AdvertisementRequest;
 import org.ssglobal.training.codes.response.AdvertisementResponse;
@@ -34,6 +35,10 @@ public class AdvertisementRepository {
 						.setParameter("userId", ad.getSupplierId());
 				User supplier = query.uniqueResult();
 				
+				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+						.setParameter("postId", ad.getPostId())
+						.list();
+				
 				AdvertisementResponse adResponse = AdvertisementResponse.builder()
 						.postId(ad.getPostId())
 						.supplier(supplier)
@@ -46,6 +51,7 @@ public class AdvertisementRepository {
 						.image(ad.getImage())
 						.postDate(ad.getPostDate())
 						.status(ad.getStatus())
+						.numOfOffers(offers.size())
 						.isOffered(ad.getIsOffered())
 						.build();
 				adsResponse.add(adResponse);
@@ -56,11 +62,40 @@ public class AdvertisementRepository {
 		}
 	}
 	
-	public List<Advertisement> getAdvertisementBySupplierId(Long id) {
+	public List<AdvertisementResponse> getAdvertisementBySupplierId(Long id) {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Advertisement WHERE supplierId = :supplierId", Advertisement.class)
+			List<Advertisement> ads = session.createQuery("FROM Advertisement WHERE supplierId = :supplierId", Advertisement.class)
 					.setParameter("supplierId", id)
 					.list();
+			
+			List<AdvertisementResponse> adsResponse = new ArrayList<>();
+			ads.stream().forEach((ad) -> {
+				Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", ad.getSupplierId());
+				User supplier = query.uniqueResult();
+				
+				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+						.setParameter("postId", ad.getPostId())
+						.list();
+				
+				AdvertisementResponse adResponse = AdvertisementResponse.builder()
+						.postId(ad.getPostId())
+						.supplier(supplier)
+						.name(ad.getName())
+						.category(ad.getCategory())
+						.description(ad.getDescription())
+						.quantity(ad.getQuantity())
+						.mass(ad.getMass())
+						.price(ad.getPrice())
+						.image(ad.getImage())
+						.postDate(ad.getPostDate())
+						.status(ad.getStatus())
+						.numOfOffers(offers.size())
+						.isOffered(ad.getIsOffered())
+						.build();
+				adsResponse.add(adResponse);
+			});
+			return adsResponse;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

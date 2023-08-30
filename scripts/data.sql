@@ -128,7 +128,8 @@ CREATE TABLE offer(
 	offer_date date,
 	offer_time time,
 	is_accepted boolean,
-	is_viewed boolean
+	is_viewed boolean,
+	status boolean
 );
 
 drop table if exists transaction;

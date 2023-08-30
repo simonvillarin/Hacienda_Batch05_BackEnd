@@ -71,6 +71,7 @@ public class OfferRepository {
 						.offerTime(offer.getOfferTime())
 						.isAccepted(offer.getIsAccepted())
 						.isViewed(offer.getIsViewed())
+						.status(offer.getStatus())
 						.build();
 				
 				offerResponses.add(offerResponse);
@@ -114,6 +115,7 @@ public class OfferRepository {
 						.offerTime(offer.getOfferTime())
 						.isAccepted(offer.getIsAccepted())
 						.isViewed(offer.getIsViewed())
+						.status(offer.getStatus())
 						.build();
 				
 				offerResponses.add(offerResponse);
@@ -125,11 +127,45 @@ public class OfferRepository {
 		}
 	}
 	
-	public List<Offer> getOfferIdByPostId(Integer id) {
+	public List<OfferResponse> getOfferByPostId(Long id) {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+			List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
 					.setParameter("postId", id)
 					.list();
+			
+			List<OfferResponse> offerResponses = new ArrayList<>();
+			offers.stream().forEach(offer -> {
+				Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", offer.getFarmerId());
+				User farmer = query.uniqueResult();
+				
+				Query<User> query1 = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", offer.getSupplierId());
+				User supplier = query1.uniqueResult();
+				
+				Query<Advertisement> query2 = session.createQuery("FROM Advertisement WHERE postId = :postId", Advertisement.class)
+						.setParameter("postId", offer.getPostId());
+				Advertisement advertisement = query2.uniqueResult();
+				
+				OfferResponse offerResponse = OfferResponse.builder()
+						.offerId(offer.getOfferId())
+						.farmer(farmer)
+						.supplier(supplier)
+						.advertisement(advertisement)
+						.quantity(offer.getQuantity())
+						.mass(offer.getMass())
+						.price(offer.getPrice())
+						.offerDate(offer.getOfferDate())
+						.offerTime(offer.getOfferTime())
+						.isAccepted(offer.getIsAccepted())
+						.isViewed(offer.getIsViewed())
+						.status(offer.getStatus())
+						.build();
+				
+				offerResponses.add(offerResponse);
+			});
+			
+			return offerResponses;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -174,21 +210,30 @@ public class OfferRepository {
 	                    .timestamp(LocalDateTime.now())
 	                    .build();
 	        }
+	        
+	        Offer _offer = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+					.setParameter("postId", offer.getPostId())
+					.uniqueResult();
 
-	        Offer newOffer = Offer.builder()
-	                .postId(offer.getPostId())
-	                .farmerId(offer.getFarmerId())
-	                .supplierId(offer.getSupplierId())
-	                .quantity(offer.getQuantity())
-	                .mass(offer.getMass())
-	                .price(offer.getPrice())
-	                .offerDate(LocalDate.now())
-	                .offerTime(LocalTime.now())
-	                .isAccepted(false)
-	                .isViewed(false)
-	                .build();
-
-	        session.persist(newOffer);
+	       if (_offer == null) {
+	    	   Offer newOffer = Offer.builder()
+		                .postId(offer.getPostId())
+		                .farmerId(offer.getFarmerId())
+		                .supplierId(offer.getSupplierId())
+		                .quantity(offer.getQuantity())
+		                .mass(offer.getMass())
+		                .price(offer.getPrice())
+		                .offerDate(LocalDate.now())
+		                .offerTime(LocalTime.now())
+		                .isAccepted(false)
+		                .isViewed(false)
+		                .status(true)
+		                .build();
+	    	   
+		        session.persist(newOffer);
+	       } else {
+	    	   _offer.setStatus(true);
+	       }
 
 	        session.getTransaction().commit();
 
@@ -239,6 +284,9 @@ public class OfferRepository {
 	        }
 	        if (offer.getIsViewed() != null) {
 	            existingOffer.setIsViewed(offer.getIsViewed());
+	        }
+	        if (offer.getStatus() != null) {
+	        	existingOffer.setStatus(offer.getStatus());
 	        }
 
 	        session.getTransaction().commit();

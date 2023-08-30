@@ -2,6 +2,7 @@ package org.ssglobal.training.codes.repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,7 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.ssglobal.training.codes.model.Complaint;
 import org.ssglobal.training.codes.model.Farmer;
 import org.ssglobal.training.codes.model.Image;
+import org.ssglobal.training.codes.model.User;
 import org.ssglobal.training.codes.request.ComplaintRequest;
+import org.ssglobal.training.codes.response.ComplaintResponse;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +25,29 @@ import lombok.RequiredArgsConstructor;
 public class ComplaintRepository {
 	private final SessionFactory sf;
 	
-	public List<Complaint> getAllComplaints() {
+	public List<ComplaintResponse> getAllComplaints() {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Complaint", Complaint.class).list();
+			List<Complaint> complaints = session.createQuery("FROM Complaint", Complaint.class).list();
+			
+			List<ComplaintResponse> complaintResponses = new ArrayList<>();
+			complaints.forEach(complaint -> {
+				User farmer = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", complaint.getFarmerId())
+						.uniqueResult();
+				
+				ComplaintResponse complaintResponse = ComplaintResponse.builder()
+						.complaintId(complaint.getComplaintId())
+						.farmer(farmer)
+						.complaintType(complaint.getComplaintType())
+						.complaintDetails(complaint.getComplaintDetails())
+						.date(complaint.getDate())
+						.image(complaint.getImage())
+						.status(complaint.getStatus())
+						.build();
+				complaintResponses.add(complaintResponse);
+			});
+			
+			return complaintResponses;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -38,11 +61,31 @@ public class ComplaintRepository {
 		}
 	}
 	
-	public List<Complaint> getComplaintByFarmerId(Long id) {
+	public List<ComplaintResponse> getComplaintByFarmerId(Long id) {
 		try (Session session = sf.openSession()) {
-			return session.createQuery("FROM Complaint WHERE farmerId = :farmerId", Complaint.class)
+			List<Complaint> complaints = session.createQuery("FROM Complaint WHERE farmerId = :farmerId", Complaint.class)
 					.setParameter("farmerId", id)
 					.list();
+			
+			List<ComplaintResponse> complaintResponses = new ArrayList<>();
+			complaints.forEach(complaint -> {
+				User farmer = session.createQuery("FROM User WHERE userId = :userId", User.class)
+						.setParameter("userId", complaint.getFarmerId())
+						.uniqueResult();
+				
+				ComplaintResponse complaintResponse = ComplaintResponse.builder()
+						.complaintId(complaint.getComplaintId())
+						.farmer(farmer)
+						.complaintType(complaint.getComplaintType())
+						.complaintDetails(complaint.getComplaintDetails())
+						.date(complaint.getDate())
+						.image(complaint.getImage())
+						.status(complaint.getStatus())
+						.build();
+				complaintResponses.add(complaintResponse);
+			});
+			
+			return complaintResponses;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -54,7 +97,7 @@ public class ComplaintRepository {
 
 			Complaint comp = new Complaint();
 			comp.setDate(LocalDate.now());
-			comp.setStatus(true);
+			comp.setStatus(false);
 			
 			if (complaint.getFarmerId() != null) {
 				Query<Farmer> query1 = session.createQuery("FROM Farmer WHERE userId = :userId", Farmer.class)
@@ -150,6 +193,32 @@ public class ComplaintRepository {
 						.timestamp(LocalDateTime.now())
 						.build();
 			}
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public Response deleteComplaint(Long id) {
+		try (Session session = sf.openSession()) {
+			Complaint complaint = session.get(Complaint.class, id);
+			if (complaint != null) {
+				session.beginTransaction();
+				session.delete(complaint);
+				session.getTransaction().commit();
+				
+				return Response.builder()
+						.status(200)
+						.message("Complaint successfully deleted")
+						.timestamp(LocalDateTime.now())
+						.build();
+			} else {
+				return Response.builder()
+						.status(404)
+						.message("Complaint not found")
+						.timestamp(LocalDateTime.now())
+						.build();
+			}
+			
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

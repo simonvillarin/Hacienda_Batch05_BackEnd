@@ -22,7 +22,7 @@ public class AdvertisementService {
 		return advertisementRepository.getAllAdvertisement();
 	}
 	
-	public List<Advertisement> getAdvertisementBySupplierId(Long id) {
+	public List<AdvertisementResponse> getAdvertisementBySupplierId(Long id) {
 		return advertisementRepository.getAdvertisementBySupplierId(id);
 	}
 	

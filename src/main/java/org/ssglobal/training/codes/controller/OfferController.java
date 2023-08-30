@@ -58,7 +58,7 @@ public class OfferController {
 	@GET
 	@Path("/offers/post/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Offer> getOfferByPostId(@PathParam("id") Integer id) {
+	public List<OfferResponse> getOfferPostId(@PathParam("id") Long id) {
 		return offerService.getOfferByPostId(id);
 	}
 	

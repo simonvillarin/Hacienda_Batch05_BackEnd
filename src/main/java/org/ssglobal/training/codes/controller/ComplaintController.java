@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Complaint;
 import org.ssglobal.training.codes.request.ComplaintRequest;
+import org.ssglobal.training.codes.response.ComplaintResponse;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.ComplaintService;
 
@@ -29,7 +30,7 @@ public class ComplaintController {
 	@GET
 	@Path("/complaints")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Complaint> getAllComplaint() {
+	public List<ComplaintResponse> getAllComplaint() {
 		return complaintService.getAllComplaints();
 	}
 	
@@ -43,7 +44,7 @@ public class ComplaintController {
 	@GET
 	@Path("/complaint/farmer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Complaint> getComplaintByFarmerId(@PathParam("id") Long id) {
+	public List<ComplaintResponse> getComplaintByFarmerId(@PathParam("id") Long id) {
 		return complaintService.getComplaintByFarmerId(id);
 	}
 	
@@ -61,5 +62,12 @@ public class ComplaintController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateComplaint(@PathParam("id") Long id, @RequestBody ComplaintRequest complaint) {
 		return complaintService.updateComplaint(id, complaint);
+	}
+	
+	@PUT
+	@Path("/complaint/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteComplaint(@PathParam("id") Long id) {
+		return complaintService.deleteComplaint(id);
 	}
 }

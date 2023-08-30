@@ -33,8 +33,8 @@ public class OfferService {
 		return offerRepository.getOfferBySupplierId(id);
 	}
 	
-	public List<Offer> getOfferByPostId(Integer id) {
-		return offerRepository.getOfferIdByPostId(id);
+	public List<OfferResponse> getOfferByPostId(Long id) {
+		return offerRepository.getOfferByPostId(id);
 	}
 	
 	@Transactional

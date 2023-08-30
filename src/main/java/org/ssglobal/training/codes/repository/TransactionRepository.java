@@ -164,15 +164,24 @@ public class TransactionRepository {
                         .build();
             }
             
-            Transaction newTransaction = Transaction.builder()
-            		.supplierId(transaction.getSupplierId())
-            		.farmerId(transaction.getFarmerId())
-            		.offerId(transaction.getOfferId())
-            		.acceptDate(LocalDate.now())
-            		.acceptTime(LocalTime.now())
-            		.build();
+            Transaction _transaction = session.createQuery("FROM Transaction WHERE offerId = :offerId", Transaction.class)
+					.setParameter("offerId", transaction.getOfferId())
+					.uniqueResult();
+            
+            if (_transaction == null) {
+            	  Transaction newTransaction = Transaction.builder()
+                  		.supplierId(transaction.getSupplierId())
+                  		.farmerId(transaction.getFarmerId())
+                  		.offerId(transaction.getOfferId())
+                  		.acceptDate(LocalDate.now())
+                  		.acceptTime(LocalTime.now())
+                  		.status(true)
+                  		.build();
 
-            session.persist(newTransaction);
+                  session.persist(newTransaction);
+            } else {
+            	_transaction.setStatus(true);
+            }
 
             session.getTransaction().commit();
 

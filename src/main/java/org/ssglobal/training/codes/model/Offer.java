@@ -56,4 +56,7 @@ public class Offer {
 	
 	@Column(name = "is_viewed")
 	private Boolean isViewed;
+	
+	@Column(name = "status")
+	private Boolean status;
 }

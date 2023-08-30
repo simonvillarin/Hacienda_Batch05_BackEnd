@@ -27,4 +27,5 @@ public class OfferResponse {
 	private LocalTime offerTime;
 	private Boolean isAccepted;
 	private Boolean isViewed;	
+	private Boolean status;
 }

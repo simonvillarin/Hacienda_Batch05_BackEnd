@@ -13,18 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdvertisementResponse {
-	private Long postId;
-	private User supplier;
-	private String name;
-	private String category;
-	private String description;
-	private Integer quantity;
-	private Double mass;
-	private Double price;
+public class ComplaintResponse {
+	private Long complaintId;
+	private User farmer;
+	private String complaintType;
+	private String complaintDetails;
+	private LocalDate date;
 	private String image;
-	private LocalDate postDate;
 	private Boolean status;
-	private Integer numOfOffers;
-	private Boolean isOffered;
 }
