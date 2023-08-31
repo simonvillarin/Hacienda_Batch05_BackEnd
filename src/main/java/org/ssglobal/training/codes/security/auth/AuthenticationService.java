@@ -142,7 +142,7 @@ public class AuthenticationService {
 			if (user.getFilename2() != null) {
 				Image image = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
 						.setParameter("filename", user.getFilename2())
-						.getSingleResult();
+						.uniqueResult();
 				if (image == null) {
 					Image img = Image.builder()
 							.filename(user.getFilename2())
