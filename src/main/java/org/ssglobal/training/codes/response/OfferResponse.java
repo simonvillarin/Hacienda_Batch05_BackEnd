@@ -20,8 +20,8 @@ public class OfferResponse {
 	private User farmer;
 	private User supplier;
 	private Advertisement advertisement;
-	private Integer quantity;
-	private Double mass;
+	private String measurement;
+	private Double value;
 	private Double price;
 	private LocalDate offerDate;
 	private LocalTime offerTime;

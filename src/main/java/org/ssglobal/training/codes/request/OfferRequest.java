@@ -13,8 +13,8 @@ public class OfferRequest {
 	private Long farmerId;
 	private Long supplierId;
 	private Long postId;
-	private Integer quantity;
-	private Double mass;
+	private String measurement;
+	private Double value;
 	private Double price;
 	private Boolean isAccepted;
 	private Boolean isViewed;

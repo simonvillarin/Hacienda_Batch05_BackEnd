@@ -45,8 +45,8 @@ public class AdvertisementRepository {
 						.name(ad.getName())
 						.category(ad.getCategory())
 						.description(ad.getDescription())
-						.quantity(ad.getQuantity())
-						.mass(ad.getMass())
+						.measurement(ad.getMeasurement())
+						.value(ad.getValue())
 						.price(ad.getPrice())
 						.image(ad.getImage())
 						.postDate(ad.getPostDate())
@@ -84,8 +84,8 @@ public class AdvertisementRepository {
 						.name(ad.getName())
 						.category(ad.getCategory())
 						.description(ad.getDescription())
-						.quantity(ad.getQuantity())
-						.mass(ad.getMass())
+						.measurement(ad.getMeasurement())
+						.value(ad.getValue())
 						.price(ad.getPrice())
 						.image(ad.getImage())
 						.postDate(ad.getPostDate())
@@ -130,11 +130,11 @@ public class AdvertisementRepository {
 			if (advertisement.getDescription() != null && advertisement.getDescription() != "") {
 				ad.setDescription(advertisement.getDescription());
 			}
-			if (advertisement.getQuantity() != null) {
-				ad.setQuantity(advertisement.getQuantity());
+			if (advertisement.getMeasurement() != null) {
+				ad.setMeasurement(advertisement.getMeasurement());
 			}
-			if (advertisement.getMass() != null) {
-				ad.setMass(advertisement.getMass());
+			if (advertisement.getValue() != null) {
+				ad.setValue(advertisement.getValue());
 			}
 			if (advertisement.getPrice() != null) {
 				ad.setPrice(advertisement.getPrice());
@@ -185,11 +185,11 @@ public class AdvertisementRepository {
 				if (advertisement.getDescription() != null && advertisement.getDescription() != "") {
 					ad.setDescription(advertisement.getDescription());
 				}
-				if (advertisement.getQuantity() != null) {
-					ad.setQuantity(advertisement.getQuantity());
+				if (advertisement.getMeasurement() != null) {
+					ad.setMeasurement(advertisement.getMeasurement());
 				}
-				if (advertisement.getMass() != null) {
-					ad.setMass(advertisement.getMass());
+				if (advertisement.getValue() != null) {
+					ad.setValue(advertisement.getValue());
 				}
 				if (advertisement.getPrice() != null) {
 					ad.setPrice(advertisement.getPrice());

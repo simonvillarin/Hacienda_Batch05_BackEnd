@@ -19,8 +19,8 @@ public class AdvertisementResponse {
 	private String name;
 	private String category;
 	private String description;
-	private Integer quantity;
-	private Double mass;
+	private String measurement;
+	private Double value;
 	private Double price;
 	private String image;
 	private LocalDate postDate;

@@ -16,8 +16,8 @@ public class AdvertisementRequest {
 	private String name;
 	private String category;
 	private String description;
-	private Integer quantity;
-	private Double mass;
+	private String measurement;
+	private Double value;
 	private Double price;
 	private String filename;
 	private String mimeType;

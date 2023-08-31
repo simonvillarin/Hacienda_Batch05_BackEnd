@@ -64,8 +64,8 @@ public class OfferRepository {
 						.farmer(farmer)
 						.supplier(supplier)
 						.advertisement(advertisement)
-						.quantity(offer.getQuantity())
-						.mass(offer.getMass())
+						.measurement(offer.getMeasurement())
+						.value(offer.getValue())
 						.price(offer.getPrice())
 						.offerDate(offer.getOfferDate())
 						.offerTime(offer.getOfferTime())
@@ -108,8 +108,8 @@ public class OfferRepository {
 						.farmer(farmer)
 						.supplier(supplier)
 						.advertisement(advertisement)
-						.quantity(offer.getQuantity())
-						.mass(offer.getMass())
+						.measurement(offer.getMeasurement())
+						.value(offer.getValue())
 						.price(offer.getPrice())
 						.offerDate(offer.getOfferDate())
 						.offerTime(offer.getOfferTime())
@@ -152,8 +152,8 @@ public class OfferRepository {
 						.farmer(farmer)
 						.supplier(supplier)
 						.advertisement(advertisement)
-						.quantity(offer.getQuantity())
-						.mass(offer.getMass())
+						.measurement(offer.getMeasurement())
+						.value(offer.getValue())
 						.price(offer.getPrice())
 						.offerDate(offer.getOfferDate())
 						.offerTime(offer.getOfferTime())
@@ -195,13 +195,6 @@ public class OfferRepository {
 	                    .message("Invalid Supplier Id")
 	                    .timestamp(LocalDateTime.now())
 	                    .build();
-	        }   
-	        if (offer.getQuantity() == null || offer.getQuantity() <= 0) {
-	            return Response.builder()
-	                    .status(400)
-	                    .message("Invalid Quantity")
-	                    .timestamp(LocalDateTime.now())
-	                    .build();
 	        }  
 	        if (offer.getPrice() == null || offer.getPrice() <= 0) {
 	            return Response.builder()
@@ -220,8 +213,8 @@ public class OfferRepository {
 		                .postId(offer.getPostId())
 		                .farmerId(offer.getFarmerId())
 		                .supplierId(offer.getSupplierId())
-		                .quantity(offer.getQuantity())
-		                .mass(offer.getMass())
+		        		.measurement(offer.getMeasurement())
+						.value(offer.getValue())
 		                .price(offer.getPrice())
 		                .offerDate(LocalDate.now())
 		                .offerTime(LocalTime.now())
@@ -270,11 +263,11 @@ public class OfferRepository {
 	        if (offer.getSupplierId() != null) {
 	            existingOffer.setSupplierId(offer.getSupplierId());
 	        }
-	        if (offer.getQuantity() != null) {
-	            existingOffer.setQuantity(offer.getQuantity());
+	        if (offer.getMeasurement() != null) {
+	            existingOffer.setMeasurement(offer.getMeasurement());
 	        }
-	        if (offer.getMass() != null) {
-	            existingOffer.setMass(offer.getMass());
+	        if (offer.getValue() != null) {
+	            existingOffer.setValue(offer.getValue());;
 	        }
 	        if (offer.getPrice() != null) {
 	            existingOffer.setPrice(offer.getPrice());

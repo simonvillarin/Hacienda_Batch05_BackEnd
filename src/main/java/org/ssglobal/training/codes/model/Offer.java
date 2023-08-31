@@ -36,11 +36,11 @@ public class Offer {
 	@Column(name = "post_id")
 	private Long postId;
 	
-	@Column(name = "quantity")
-	private Integer quantity;
+	@Column(name = "measurement")
+	private String measurement;
 	
-	@Column(name = "mass")
-	private Double mass;
+	@Column(name = "value")
+	private Double value;
 	
 	@Column(name = "price")
 	private Double price;

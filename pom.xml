@@ -77,6 +77,11 @@
    			<groupId>org.glassfish.jersey.media</groupId>
     		<artifactId>jersey-media-multipart</artifactId>
 		</dependency>
+		<dependency>
+        	<groupId>com.vonage</groupId>
+        	<artifactId>client</artifactId>
+        	<version>[6.1.0,7.0.0)</version>
+    	</dependency>
 	</dependencies>
 
 	<build>
