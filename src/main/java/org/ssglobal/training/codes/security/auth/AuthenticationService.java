@@ -57,6 +57,18 @@ public class AuthenticationService {
 				session.persist(img);
 			}
 			
+			Query<Image> query6 = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+					.setParameter("filename", user.getFilename3());
+			Image image2 = query6.uniqueResult();
+			if (image2 == null) {
+				Image img = Image.builder()
+						.filename(user.getFilename3())
+						.mimeType(user.getMimeType3())
+						.data(user.getData3())
+						.build();
+				session.persist(img);
+			}
+			
 			var _user = User.builder()
 					.firstName(user.getFirstName())
 					.middleName(user.getMiddleName())
@@ -73,8 +85,10 @@ public class AuthenticationService {
 					.region(user.getRegion())
 					.contact(user.getContact())
 					.email(user.getEmail())
+					.idType(user.getIdType())
 					.idFront(createImageLink(user.getFilename1()))
 					.idBack(createImageLink(user.getFilename2()))
+					.seflie(createImageLink(user.getFilename3()))
 					.username(user.getUsername())
 					.password(passwordEncoder.encode(user.getPassword()))
 					.role(user.getRole())

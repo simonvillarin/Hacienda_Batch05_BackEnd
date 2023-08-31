@@ -85,11 +85,17 @@ public class User implements UserDetails {
 	@Column(name = "image")
 	private String image;
 	
+	@Column(name = "id_type")
+	private String idType;
+	
 	@Column(name = "id_front")
 	private String idFront;
 	
 	@Column(name = "id_back")
 	private String idBack;
+	
+	@Column(name = "selfie")
+	private String seflie;
 	
 	@Column(name = "username")
 	private String username;
@@ -101,7 +107,7 @@ public class User implements UserDetails {
 	private Role role;
 	
 	@Column(name = "status")
-	private Boolean status;
+	private String status;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -120,22 +126,22 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return status;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return status;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return status;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return status;
+		return true;
 	}
 }
 

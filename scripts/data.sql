@@ -22,12 +22,14 @@ CREATE TABLE users(
 	contact VARCHAR(20),
 	email VARCHAR(80),
 	image TEXT,
+	id_type VARCHAR(80),
 	id_front TEXT,
 	id_back TEXT,
+	selfie TEXT,
 	username VARCHAR(80),
 	password VARCHAR(255),
 	role VARCHAR(50),
-	status BOOLEAN
+	status VARCHAR(80)
 );
 
 DROP TABLE IF EXISTS farmer;
