@@ -164,8 +164,9 @@ public class AuthenticationService {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 		
 		try (Session session = sf.openSession()) {
-			Query<User> query = session.createQuery("FROM User u WHERE u.username = :username", User.class);
+			Query<User> query = session.createQuery("FROM User u WHERE u.username = :username and status = :status", User.class);
 			query.setParameter("username", authRequest.getUsername());
+			query.setParameter("status", "Active");
 			User user = query.uniqueResult();
 			 
 			 String token;
