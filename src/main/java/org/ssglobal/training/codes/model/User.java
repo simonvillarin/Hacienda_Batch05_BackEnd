@@ -95,7 +95,7 @@ public class User implements UserDetails {
 	private String idBack;
 	
 	@Column(name = "selfie")
-	private String seflie;
+	private String selfie;
 	
 	@Column(name = "username")
 	private String username;

@@ -33,119 +33,160 @@ public class AuthenticationService {
 		try (Session session = sf.openSession()) {
 			session.beginTransaction();
 			
-			Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
-					.setParameter("filename", user.getFilename1());
-			Image image = query.uniqueResult();
-			if (image == null) {
-				Image img = Image.builder()
-						.filename(user.getFilename1())
-						.mimeType(user.getMimeType1())
-						.data(user.getData1())
-						.build();
-				session.persist(img);
+			User _user = new User();
+			
+			if (user.getFirstName() != null) {
+				_user.setFirstName(user.getFirstName());
+			}
+			if (user.getMiddleName() != null) {
+				_user.setMiddleName(user.getMiddleName());
+			}
+			if (user.getLastName() != null) {
+				_user.setLastName(user.getLastName());
+			}
+			if (user.getSuffix() != null) {
+				_user.setSuffix(user.getSuffix());
+			}
+			if (user.getGender() != null) {
+				_user.setGender(user.getGender());
+			}
+			if (user.getBirthdate() != null) {
+				_user.setBirthdate(user.getBirthdate());
+			}
+			if (user.getUnit() != null) {
+				_user.setUnit(user.getUnit());
+			}
+			if (user.getStreet() != null) {
+				_user.setStreet(user.getStreet());
+			}
+			if (user.getVillage() != null) {
+				_user.setVillage(user.getVillage());
+			}
+			if (user.getBarangay() != null) {
+				_user.setBarangay(user.getBarangay());
+			}
+			if (user.getCity() != null) {
+				_user.setCity(user.getCity());
+			}
+			if (user.getProvince() != null) {
+				_user.setProvince(user.getProvince());
+			}
+			if (user.getRegion() != null) {
+				_user.setRegion(user.getRegion());
+			}
+			if (user.getIdType() != null) {
+				_user.setIdType(user.getIdType());
+			}
+			if (user.getPassword() != null) {
+				_user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
+			if (user.getRole() != null) {
+				_user.setRole(user.getRole());
+			}
+			if (user.getStatus() != null) {
+				_user.setStatus(user.getStatus());
+			}
+			if (user.getContact() != null) {
+				User usr = session.createQuery("FROM User WHERE contact = :contact", User.class)
+						.setParameter("contact", user.getContact())
+						.uniqueResult();
+				if (usr != null) {
+					return Response.builder()
+							.status(409)
+							.message("Contact number already exists")
+							.timestamp(LocalDateTime.now())
+							.build();
+				}
+				_user.setContact(user.getContact());
+			}
+			if (user.getEmail() != null) {
+				User usr = session.createQuery("FROM User WHERE email = :email", User.class)
+						.setParameter("email", user.getEmail())
+						.uniqueResult();
+				if (usr != null) {
+					return Response.builder()
+							.status(403)
+							.message("Email already exists")
+							.timestamp(LocalDateTime.now())
+							.build();
+				}
+				_user.setEmail(user.getEmail());
+			}
+			if (user.getUsername() != null) {
+				User usr = session.createQuery("FROM User WHERE username = :username", User.class)
+						.setParameter("username", user.getUsername())
+						.uniqueResult();
+				if (usr != null) {
+					return Response.builder()
+							.status(403)
+							.message("Username already exists")
+							.timestamp(LocalDateTime.now())
+							.build();
+				}
+				_user.setUsername(user.getUsername());
+			}
+			if (user.getFilename1() != null) {
+				Image image = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+						.setParameter("filename", user.getFilename1())
+						.uniqueResult();
+				if (image == null) {
+					Image img = Image.builder()
+							.filename(user.getFilename1())
+							.mimeType(user.getMimeType1())
+							.data(user.getData1())
+							.build();
+					session.persist(img);
+				}
+				_user.setIdFront(createImageLink(user.getFilename1()));
+			}
+			if (user.getFilename2() != null) {
+				Image image = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+						.setParameter("filename", user.getFilename2())
+						.getSingleResult();
+				if (image == null) {
+					Image img = Image.builder()
+							.filename(user.getFilename2())
+							.mimeType(user.getMimeType2())
+							.data(user.getData2())
+							.build();
+					session.persist(img);
+				}
+				_user.setIdBack(createImageLink(user.getFilename2()));
+			}
+			if (user.getFilename3() != null) {
+				Image image = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
+						.setParameter("filename", user.getFilename3())
+						.uniqueResult();
+				if (image == null) {
+					Image img = Image.builder()
+							.filename(user.getFilename3())
+							.mimeType(user.getMimeType3())
+							.data(user.getData3())
+							.build();
+					session.persist(img);
+				}
+				_user.setSelfie(createImageLink(user.getFilename3()));
 			}
 			
-			Query<Image> query5 = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
-					.setParameter("filename", user.getFilename2());
-			Image image1 = query5.uniqueResult();
-			if (image1 == null) {
-				Image img = Image.builder()
-						.filename(user.getFilename2())
-						.mimeType(user.getMimeType2())
-						.data(user.getData2())
-						.build();
-				session.persist(img);
-			}
-			
-			Query<Image> query6 = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
-					.setParameter("filename", user.getFilename3());
-			Image image2 = query6.uniqueResult();
-			if (image2 == null) {
-				Image img = Image.builder()
-						.filename(user.getFilename3())
-						.mimeType(user.getMimeType3())
-						.data(user.getData3())
-						.build();
-				session.persist(img);
-			}
-			
-			var _user = User.builder()
-					.firstName(user.getFirstName())
-					.middleName(user.getMiddleName())
-					.lastName(user.getLastName())
-					.suffix(user.getSuffix())
-					.gender(user.getGender())
-					.birthdate(user.getBirthdate())
-					.unit(user.getUnit())
-					.street(user.getStreet())
-					.village(user.getVillage())
-					.barangay(user.getBarangay())
-					.city(user.getCity())
-					.province(user.getProvince())
-					.region(user.getRegion())
-					.contact(user.getContact())
-					.email(user.getEmail())
-					.idType(user.getIdType())
-					.idFront(createImageLink(user.getFilename1()))
-					.idBack(createImageLink(user.getFilename2()))
-					.seflie(createImageLink(user.getFilename3()))
-					.username(user.getUsername())
-					.password(passwordEncoder.encode(user.getPassword()))
-					.role(user.getRole())
-					.status(user.getStatus())
-					.build();
-			
-			Query<User> query1 = session.createQuery("FROM User WHERE contact = :contact", User.class)
-					.setParameter("contact", user.getContact());
-			User user1 = query1.uniqueResult();
-			if (user1 != null) {
-				return Response.builder()
-						.status(409)
-						.message("Contact number already exists")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
-			
-			Query<User> query2 = session.createQuery("FROM User WHERE email = :email", User.class)
-					.setParameter("email", user.getEmail());
-			User user2 = query2.uniqueResult();
-			if (user2 != null) {
-				return Response.builder()
-						.status(403)
-						.message("Email already exists")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
-			
-			Query<User> query3 = session.createQuery("FROM User WHERE username = :username", User.class)
-					.setParameter("username", user.getUsername());
-			User user3 = query3.uniqueResult();
-			if (user3 != null) {
-				return Response.builder()
-						.status(403)
-						.message("Username already exists")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
 			session.persist(_user);
 			
-			Query<User> query4 = session.createQuery("FROM User u ORDER BY u.userId DESC", User.class);
-			query4.setMaxResults(1);
-			User user4 = query4.uniqueResult();
+			Query<User> query = session.createQuery("FROM User u ORDER BY u.userId DESC", User.class);
+			query.setMaxResults(1);
+			User usr = query.uniqueResult();
 			
 			if ("Admin".equalsIgnoreCase(user.getRole().name())) {
-				var admin = Admin.builder()
-						.userId(user4.getUserId())
+				Admin admin = Admin.builder()
+						.userId(usr.getUserId())
 						.build();
 				session.persist(admin);
 			} else if ("Supplier".equalsIgnoreCase(user.getRole().name())) {
-				var supplier = Supplier.builder()
-						.userId(user4.getUserId())
+				Supplier supplier = Supplier.builder()
+						.userId(usr.getUserId())
 						.build();
 				session.persist(supplier);
 			} else {
-				var farmer = Farmer.builder()
-						.userId(user4.getUserId())
+				Farmer farmer = Farmer.builder()
+						.userId(usr.getUserId())
 						.build();
 				session.persist(farmer);
 			}
@@ -164,17 +205,17 @@ public class AuthenticationService {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 		
 		try (Session session = sf.openSession()) {
-			Query<User> query = session.createQuery("FROM User u WHERE u.username = :username and status = :status", User.class);
-			query.setParameter("username", authRequest.getUsername());
-			query.setParameter("status", "Active");
-			User user = query.uniqueResult();
+			User user = session.createQuery("FROM User u WHERE u.username = :username and status = :status", User.class)
+					.setParameter("username", authRequest.getUsername())
+					.setParameter("status", "Active")
+					.uniqueResult();
 			 
-			 String token;
-			 if (user != null) {
-				 token = jwtService.generateToken(user);
-			 } else {
-				 throw new RuntimeException("User not found");
-			 } 
+			String token;
+			if (user != null) {
+				token = jwtService.generateToken(user);
+			} else {
+				throw new RuntimeException("User not found");
+			}
 			return AuthenticationResponse.builder()
 					.token(token)
 					.id(user.getUserId())
