@@ -153,19 +153,8 @@ public class AuthenticationService {
 				}
 				_user.setIdBack(createImageLink(user.getFilename2()));
 			}
-			if (user.getFilename3() != null) {
-				Image image = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
-						.setParameter("filename", user.getFilename3())
-						.uniqueResult();
-				if (image == null) {
-					Image img = Image.builder()
-							.filename(user.getFilename3())
-							.mimeType(user.getMimeType3())
-							.data(user.getData3())
-							.build();
-					session.persist(img);
-				}
-				_user.setSelfie(createImageLink(user.getFilename3()));
+			if (user.getSelfie() != null) {
+				_user.setSelfie(user.getSelfie());
 			}
 			
 			session.persist(_user);
