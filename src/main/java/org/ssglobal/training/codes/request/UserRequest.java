@@ -32,6 +32,7 @@ public class UserRequest {
 	private String username;
 	private String password;
 	private String idType;
+	private String selfie;
 	private String filename;
 	private String mimeType;
 	private byte[] data;
@@ -41,9 +42,6 @@ public class UserRequest {
 	private String filename2;
 	private String mimeType2;
 	private byte[] data2;
-	private String filename3;
-	private String mimeType3;
-	private byte[] data3;
 	private Role role;
 	private String status;
 }
