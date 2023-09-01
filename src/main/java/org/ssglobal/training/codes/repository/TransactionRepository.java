@@ -141,7 +141,7 @@ public class TransactionRepository {
 	public Response addTransaction(Transaction transaction) {
 		try (Session session = sf.openSession()) {
             session.beginTransaction();
-
+            
             if (transaction.getSupplierId() == null || transaction.getSupplierId() <= 0) {
                 return Response.builder()
                         .status(400)
