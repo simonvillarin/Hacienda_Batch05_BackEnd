@@ -73,6 +73,8 @@ DROP TABLE IF EXISTS course;
 CREATE TABLE course(
 	course_id SERIAL,
 	course_name VARCHAR(255),
+	description VARCHAR(255),
+	yt_link TEXT,
 	status BOOLEAN
 );
 

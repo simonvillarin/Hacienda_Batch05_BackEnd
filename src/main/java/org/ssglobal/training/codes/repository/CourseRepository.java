@@ -42,6 +42,14 @@ public class CourseRepository {
 			if (course.getCourseName() != null && course.getCourseName() != "") {
 				course.setCourseName(course.getCourseName());
 			}
+			
+			if (course.getDescription() != null && course.getDescription() != "") {
+				course.setDescription(course.getDescription());
+			}
+			
+			if (course.getYtLink() != null && course.getYtLink() != "") {
+				course.setYtLink(course.getYtLink());
+			}
 	
 			session.persist(course);
 			
@@ -65,6 +73,14 @@ public class CourseRepository {
 				
 				if (course.getCourseName() != null && course.getCourseName() != "") {
 					c.setCourseName(course.getCourseName());
+				}
+				
+				if (course.getDescription() != null && course.getDescription() != "") {
+					course.setDescription(course.getDescription());
+				}
+				
+				if (course.getYtLink() != null && course.getYtLink() != "") {
+					course.setYtLink(course.getYtLink());
 				}
 				
 				if (course.getStatus() != null) {

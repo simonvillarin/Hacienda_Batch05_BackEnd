@@ -27,6 +27,12 @@ public class Course {
 	@Column(name = "course_name")
 	private String courseName;
 	
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "yt_link")
+	private String ytLink;
+	
 	@Column(name = "status")
 	private Boolean status;
 }
