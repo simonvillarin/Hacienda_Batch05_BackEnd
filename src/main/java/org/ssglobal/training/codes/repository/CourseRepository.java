@@ -76,11 +76,11 @@ public class CourseRepository {
 				}
 				
 				if (course.getDescription() != null && course.getDescription() != "") {
-					course.setDescription(course.getDescription());
+					c.setDescription(course.getDescription());
 				}
 				
 				if (course.getYtLink() != null && course.getYtLink() != "") {
-					course.setYtLink(course.getYtLink());
+					c.setYtLink(course.getYtLink());
 				}
 				
 				if (course.getStatus() != null) {
