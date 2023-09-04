@@ -1,5 +1,7 @@
 package org.ssglobal.training.codes.controller;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.response.PaymentResponse;
 import org.ssglobal.training.codes.response.Response;
@@ -23,6 +26,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PaymentController {
 	private final PaymentService paymentService;
+	
+	@GET
+	@Path("/payments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Payment> getAllPayment() {
+		return paymentService.getAllPayment();
+	}
 
 	@GET
 	@Path("/payment/{id}")

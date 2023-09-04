@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.ssglobal.training.codes.model.Offer;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.repository.TransactionRepository;
 import org.ssglobal.training.codes.response.Response;
@@ -16,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionService {
 	private final TransactionRepository transactionRepository;
+	
+	public Transaction getTransactionById(Long id) {
+		return transactionRepository.getTransactionById(id);
+	}
 	
 	public List<TransactionResponse> getTransactionBySupplierId(Long id) {
 		return transactionRepository.getTransactionBySupplierId(id);

@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.ssglobal.training.codes.model.Offer;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.response.TransactionResponse;
@@ -26,6 +27,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionController {
 	private final TransactionService transactionService;
+	
+	@GET
+	@Path("/transaction/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Transaction getTransactionById(@PathParam("id") Long id) {
+		return transactionService.getTransactionById(id);
+	}
 	
 	@GET
 	@Path("/transaction/supplier/{id}")

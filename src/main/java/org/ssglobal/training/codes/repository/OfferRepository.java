@@ -178,7 +178,7 @@ public class OfferRepository {
 	        if (offer.getPostId() == null || offer.getPostId() <= 0) {
 	            return Response.builder()
 	                    .status(400)
-	                    .message("Invalid Post ID")
+	                    .message("Invalid Post Id")
 	                    .timestamp(LocalDateTime.now())
 	                    .build();
 	        }	        

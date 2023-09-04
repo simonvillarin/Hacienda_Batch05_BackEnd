@@ -3,12 +3,14 @@ package org.ssglobal.training.codes.repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Random;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.response.PaymentResponse;
@@ -24,6 +26,14 @@ public class PaymentRepository {
 	public Payment getPaymentById(Long id) {
 		try (Session session = sf.openSession()) {
 			return session.get(Payment.class, id);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public List<Payment> getAllPayment() {
+		try (Session session = sf.openSession()) {
+			return session.createQuery("FROM Payment", Payment.class).list();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -70,7 +80,7 @@ public class PaymentRepository {
                         .timestamp(LocalDateTime.now())
                         .build();
             }
-            
+                
             Payment newPayment = Payment.builder()
                     .orderIdRef(generateOrderIdRef())
                     .transactionId(payment.getTransactionId())

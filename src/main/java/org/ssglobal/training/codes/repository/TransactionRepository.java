@@ -25,6 +25,15 @@ import lombok.RequiredArgsConstructor;
 public class TransactionRepository {
 	private final SessionFactory sf;
 	
+	public Transaction getTransactionById(Long id) {
+		try (Session session = sf.openSession()) {
+			return session.get(Transaction.class, id);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	
 	public List<TransactionResponse> getTransactionBySupplierId(Long id) {
 		try (Session session = sf.openSession()) {
 			List<Transaction> transactions = session.createQuery("FROM Transaction WHERE supplierId = :supplierId", Transaction.class)
