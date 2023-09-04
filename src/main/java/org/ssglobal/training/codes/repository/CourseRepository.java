@@ -40,18 +40,18 @@ public class CourseRepository {
 			c.setStatus(true);
 			
 			if (course.getCourseName() != null && course.getCourseName() != "") {
-				course.setCourseName(course.getCourseName());
+				c.setCourseName(course.getCourseName());
 			}
 			
 			if (course.getDescription() != null && course.getDescription() != "") {
-				course.setDescription(course.getDescription());
+				c.setDescription(course.getDescription());
 			}
 			
 			if (course.getYtLink() != null && course.getYtLink() != "") {
-				course.setYtLink(course.getYtLink());
+				c.setYtLink(course.getYtLink());
 			}
 	
-			session.persist(course);
+			session.persist(c);
 			
 			session.getTransaction().commit();
 			
