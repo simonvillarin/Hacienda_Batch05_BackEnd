@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FarmingTipsRequest {
 	private String tip;
+	private String subject;
 	private String filename;
 	private String mimeType;
 	private byte[] data;

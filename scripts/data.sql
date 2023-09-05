@@ -53,6 +53,7 @@ CREATE TABLE supplier(
 DROP TABLE IF EXISTS farming_tips;
 CREATE TABLE farming_tips(
 	tip_id SERIAL,
+	subject TEXT,
 	tip TEXT,
 	image TEXT,
 	status BOOLEAN
