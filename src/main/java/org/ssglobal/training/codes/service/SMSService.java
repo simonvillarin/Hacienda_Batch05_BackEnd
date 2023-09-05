@@ -13,14 +13,45 @@ import com.vonage.client.sms.messages.TextMessage;
 
 @Service
 public class SMSService {
-	VonageClient client = VonageClient.builder()
-			.apiKey("3660928d")
-			.apiSecret("sQOYY705e34Swgn7")
-			.build();
 	
-	public Response sendSMS(SMSRequest sms) {
+	// Simon phone number
+	public Response sendAdminSMS(SMSRequest sms) {
+		VonageClient client = VonageClient.builder()
+				.apiKey("3660928d")
+				.apiSecret("sQOYY705e34Swgn7")
+				.build();
+		
 		TextMessage message = new TextMessage("Hacienda",
-		        "63" + sms.getToNumber(),
+		        "639270445766",
+		        sms.getMessage()
+		);
+
+		SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
+
+		if (response.getMessages().get(0).getStatus() == MessageStatus.OK) {
+		   return Response.builder()
+				   .status(200)
+				   .message("SMS sent successfully")
+				   .timestamp(LocalDateTime.now())
+				   .build();
+		} else {
+			 return Response.builder()
+					   .status(400)
+					   .message("SMS failed to sent")
+					   .timestamp(LocalDateTime.now())
+					   .build();
+		}
+	}
+	
+	// Ados phone number
+	public Response sendFarmerSMS(SMSRequest sms) {
+		VonageClient client = VonageClient.builder()
+				.apiKey("ddb76f2d")
+				.apiSecret("0IlFBPt83tSKKtSF")
+				.build();
+		
+		TextMessage message = new TextMessage("Hacienda",
+		        "639054883528",
 		        sms.getMessage()
 		);
 

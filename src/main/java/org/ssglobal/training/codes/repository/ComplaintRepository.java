@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -43,6 +44,7 @@ public class ComplaintRepository {
 						.date(complaint.getDate())
 						.image(complaint.getImage())
 						.status(complaint.getStatus())
+						.isDeleted(complaint.getIsDeleted())
 						.build();
 				complaintResponses.add(complaintResponse);
 			});
@@ -81,6 +83,7 @@ public class ComplaintRepository {
 						.date(complaint.getDate())
 						.image(complaint.getImage())
 						.status(complaint.getStatus())
+						.isDeleted(complaint.getIsDeleted())
 						.build();
 				complaintResponses.add(complaintResponse);
 			});
@@ -98,6 +101,7 @@ public class ComplaintRepository {
 			Complaint comp = new Complaint();
 			comp.setDate(LocalDate.now());
 			comp.setStatus(false);
+			comp.setIsDeleted(false);
 			
 			if (complaint.getFarmerId() != null) {
 				Query<Farmer> query1 = session.createQuery("FROM Farmer WHERE userId = :userId", Farmer.class)
@@ -178,6 +182,9 @@ public class ComplaintRepository {
 				if (complaint.getStatus() != null) {
 					comp.setStatus(complaint.getStatus());
 				}
+				if (complaint.getIsDeleted() != null) {
+					comp.setIsDeleted(complaint.getIsDeleted());
+				}
 				
 				session.getTransaction().commit();
 				
@@ -199,30 +206,32 @@ public class ComplaintRepository {
 	}
 	
 	public Response deleteComplaint(Long id) {
-		try (Session session = sf.openSession()) {
-			Complaint complaint = session.get(Complaint.class, id);
-			if (complaint != null) {
-				session.beginTransaction();
-				session.delete(complaint);
-				session.getTransaction().commit();
-				
-				return Response.builder()
-						.status(200)
-						.message("Complaint successfully deleted")
-						.timestamp(LocalDateTime.now())
-						.build();
-			} else {
-				return Response.builder()
-						.status(404)
-						.message("Complaint not found")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
-			
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
-		}
+	    try (Session session = sf.openSession()) {
+	        Complaint complaint = session.get(Complaint.class, id);
+	        if (complaint != null) {
+	            session.beginTransaction();
+	            session.delete(complaint);
+	            session.getTransaction().commit();
+
+	            return Response.builder()
+	                    .status(200)
+	                    .message("Complaint successfully deleted")
+	                    .timestamp(LocalDateTime.now())
+	                    .build();
+	        } else {
+	            return Response.builder()
+	                    .status(404)
+	                    .message("Complaint not found")
+	                    .timestamp(LocalDateTime.now())
+	                    .build();
+	        }
+	    } catch (HibernateException e) {
+	        throw new RuntimeException("Error deleting complaint: " + e.getMessage(), e);
+	    } catch (Exception e) {
+	        throw new RuntimeException("Error deleting complaint: " + e.getMessage(), e);
+	    }
 	}
+
 	
 	private String createImageLink(String filename) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().replacePath("/api/image/" + filename).toUriString();

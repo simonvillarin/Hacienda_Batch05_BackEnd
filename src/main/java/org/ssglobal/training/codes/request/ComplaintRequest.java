@@ -17,4 +17,5 @@ public class ComplaintRequest {
 	private String mimeType;
 	private byte[] data;
 	private Boolean status;
+	private Boolean isDeleted;
 }

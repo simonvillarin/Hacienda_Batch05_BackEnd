@@ -24,6 +24,6 @@ public class SMSController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response sendSMS(SMSRequest sms) {
-		return smsService.sendSMS(sms);
+		return smsService.sendFarmerSMS(sms);
 	}
 }

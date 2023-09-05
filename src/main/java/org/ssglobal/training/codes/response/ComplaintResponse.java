@@ -21,4 +21,5 @@ public class ComplaintResponse {
 	private LocalDate date;
 	private String image;
 	private Boolean status;
+	private Boolean isDeleted;
 }

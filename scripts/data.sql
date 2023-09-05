@@ -66,7 +66,8 @@ CREATE TABLE complaint(
 	complaint_details TEXT,
 	date date,
 	image TEXT,
-	status BOOLEAN
+	status BOOLEAN,
+	is_deleted BOOLEAN
 );
 
 DROP TABLE IF EXISTS course;
