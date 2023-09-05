@@ -20,10 +20,26 @@ public class SMSController {
 	private final SMSService smsService;
 	
 	@POST
-	@Path("/sms")
+	@Path("/sms/admin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response sendSMS(SMSRequest sms) {
+	public Response sendAdminSMS(SMSRequest sms) {
+		return smsService.sendAdminSMS(sms);
+	}
+	
+	@POST
+	@Path("/sms/farmer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response sendFarmerSMS(SMSRequest sms) {
 		return smsService.sendFarmerSMS(sms);
+	}
+	
+	@POST
+	@Path("/sms/supplier")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response sendSupplierSMS(SMSRequest sms) {
+		return smsService.sendSupplierSMS(sms);
 	}
 }

@@ -71,4 +71,33 @@ public class SMSService {
 					   .build();
 		}
 	}
+	
+	//Clara phone number
+	public Response sendSupplierSMS(SMSRequest sms) {
+		VonageClient client = VonageClient.builder()
+				.apiKey("2bfdc6cf")
+				.apiSecret("76wGk41ZndD6uqzk")
+				.build();
+		
+		TextMessage message = new TextMessage("Hacienda",
+		        "639054883528",
+		        sms.getMessage()
+		);
+
+		SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
+
+		if (response.getMessages().get(0).getStatus() == MessageStatus.OK) {
+		   return Response.builder()
+				   .status(200)
+				   .message("SMS sent successfully")
+				   .timestamp(LocalDateTime.now())
+				   .build();
+		} else {
+			 return Response.builder()
+					   .status(400)
+					   .message("SMS failed to sent")
+					   .timestamp(LocalDateTime.now())
+					   .build();
+		}
+	}
 }
