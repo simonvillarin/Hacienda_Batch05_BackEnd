@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class AdvertisementService {
 	private final AdvertisementRepository advertisementRepository;
 	
-	public List<AdvertisementResponse> getAllAdvertisement() {
-		return advertisementRepository.getAllAdvertisement();
+	public List<AdvertisementResponse> getAllAdvertisement(Long id) {
+		return advertisementRepository.getAllAdvertisement(id);
 	}
 	
 	public List<AdvertisementResponse> getAdvertisementBySupplierId(Long id) {
