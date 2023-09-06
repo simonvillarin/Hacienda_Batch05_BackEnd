@@ -53,6 +53,7 @@ CREATE TABLE supplier(
 DROP TABLE IF EXISTS farming_tips;
 CREATE TABLE farming_tips(
 	tip_id SERIAL,
+	subject TEXT,
 	tip TEXT,
 	image TEXT,
 	status BOOLEAN
@@ -66,7 +67,8 @@ CREATE TABLE complaint(
 	complaint_details TEXT,
 	date date,
 	image TEXT,
-	status BOOLEAN
+	status BOOLEAN,
+	is_deleted BOOLEAN
 );
 
 DROP TABLE IF EXISTS course;

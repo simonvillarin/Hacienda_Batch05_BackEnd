@@ -24,6 +24,9 @@ public class FarmingTips {
 	@Column(name = "tip_id")
 	private Long tipId;
 	
+	@Column(name = "subject")
+	private String subject;
+	
 	@Column(name = "tip")
 	private String tip;
 	

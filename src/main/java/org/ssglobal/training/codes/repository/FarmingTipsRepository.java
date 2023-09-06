@@ -46,6 +46,11 @@ public class FarmingTipsRepository {
 			if (farmingTip.getTip() != null && farmingTip.getTip() != "") {
 				tip.setTip(farmingTip.getTip());
 			}
+			
+			if (farmingTip.getSubject() != null && farmingTip.getSubject() != "") {
+				tip.setSubject(farmingTip.getSubject());
+			}
+			
 			if (farmingTip.getFilename() != null && farmingTip.getFilename() != "") {
 				Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
 						.setParameter("filename", farmingTip.getFilename());
@@ -84,6 +89,11 @@ public class FarmingTipsRepository {
 				if (farmingTip.getTip() != null && farmingTip.getTip() != "") {
 					tip.setTip(farmingTip.getTip());
 				}
+				
+				if (farmingTip.getSubject() != null && farmingTip.getSubject() != "") {
+					tip.setSubject(farmingTip.getSubject());
+				}
+				
 				if (farmingTip.getFilename() != null && farmingTip.getFilename() != "") {
 					Query<Image> query = session.createQuery("FROM Image WHERE filename = :filename", Image.class)
 							.setParameter("filename", farmingTip.getFilename());

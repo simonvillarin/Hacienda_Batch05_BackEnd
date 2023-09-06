@@ -113,6 +113,17 @@ public class AdvertisementRepository {
 		try (Session session = sf.openSession()) {
 			session.beginTransaction();
 			
+			Advertisement adver = session.createQuery("FROM Advertisement WHERE name = :name", Advertisement.class)
+					.setParameter("name", advertisement.getName())
+					.uniqueResult();
+			if (adver != null) {
+				return Response.builder()
+						.status(400)
+						.message("Crop name already exists")
+						.timestamp(LocalDateTime.now())
+						.build();
+			}
+			
 			Advertisement ad = new Advertisement();
 			ad.setPostDate(LocalDate.now());
 			ad.setStatus(true);
