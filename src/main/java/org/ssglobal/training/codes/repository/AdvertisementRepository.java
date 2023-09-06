@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class AdvertisementRepository {
 	private final SessionFactory sf;
 	
-	public List<AdvertisementResponse> getAllAdvertisement() {
+	public List<AdvertisementResponse> getAllAdvertisement(Long id) {
 		try (Session session = sf.openSession()) {
 			List<Advertisement> ads = session.createQuery("FROM Advertisement", Advertisement.class).list();
 			
@@ -38,6 +38,19 @@ public class AdvertisementRepository {
 				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
 						.setParameter("postId", ad.getPostId())
 						.list();
+				
+				Offer offer = session.createQuery("FROM Offer WHERE postId = :postId AND farmerId = :farmerId AND status = :status", Offer.class)
+						.setParameter("postId", ad.getPostId())
+						.setParameter("farmerId", id)
+						.setParameter("status", true)
+						.uniqueResult();
+				
+				System.out.println(offer);
+				
+				boolean isOffered = false;
+				if (offer != null) {
+					isOffered = true;
+				}
 				
 				AdvertisementResponse adResponse = AdvertisementResponse.builder()
 						.postId(ad.getPostId())
@@ -52,7 +65,7 @@ public class AdvertisementRepository {
 						.postDate(ad.getPostDate())
 						.status(ad.getStatus())
 						.numOfOffers(offers.size())
-						.isOffered(ad.getIsOffered())
+						.isOffered(isOffered)
 						.build();
 				adsResponse.add(adResponse);
 			});
