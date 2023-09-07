@@ -162,13 +162,23 @@ CREATE TABLE payment(
 	payment_mode VARCHAR(80),
 	payment_date date,
 	payment_time time,
+	full_name VARCHAR(255),
+	unit VARCHAR(255),
+	street VARCHAR(255),
+	village VARCHAR(255),
+	barangay VARCHAR(255),
+	city VARCHAR(255),
+	province VARCHAR(255),
+	region VARCHAR(255),
+	contact VARCHAR(20),
 	status boolean
 );
 
 drop table if exists payment_details;
-CREATE TABLE payment(
+CREATE TABLE payment_details(
 	payment_details_id SERIAL,
 	payment_id_ref VARCHAR(80),
+	transaction_id INT,
 	payment_account_id INT,
 	payment_mode VARCHAR(80),
 	account_number INT,
@@ -177,9 +187,9 @@ CREATE TABLE payment(
 );
 
 drop table if exists payment_account;
-CREATE TABLE payment(
+CREATE TABLE payment_account(
 	payment_account_id SERIAL,
-	payment_mode VARCHAR(80),
+	farmer_id INT,
 	account_number INT,
 	account_name VARCHAR(80),
 	status boolean

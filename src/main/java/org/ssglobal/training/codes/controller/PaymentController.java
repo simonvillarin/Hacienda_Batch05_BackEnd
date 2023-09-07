@@ -60,7 +60,7 @@ public class PaymentController {
 	@Path("/payment/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updatePayment(@PathParam("id") Long id, @RequestBody Payment complaint) {
-		return paymentService.updatePayment(id, complaint);
+	public Response updatePayment(@PathParam("id") Long id, @RequestBody Payment payment) {
+		return paymentService.updatePayment(id, payment);
 	}
 }
