@@ -167,13 +167,24 @@ CREATE TABLE payment(
 
 drop table if exists payment_details;
 CREATE TABLE payment(
-	paymentDetails_id SERIAL,
-	farmer_id INT,
+	payment_details_id SERIAL,
+	payment_id_ref VARCHAR(80),
+	payment_account_id INT,
 	payment_mode VARCHAR(80),
 	account_number INT,
 	account_name VARCHAR(80),
 	status boolean
 );
+
+drop table if exists payment_account;
+CREATE TABLE payment(
+	payment_account_id SERIAL,
+	payment_mode VARCHAR(80),
+	account_number INT,
+	account_name VARCHAR(80),
+	status boolean
+);
+
 
 drop table if exists sold_crop;
 CREATE TABLE sold_crop(
