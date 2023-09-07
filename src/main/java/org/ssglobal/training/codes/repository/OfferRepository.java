@@ -204,29 +204,21 @@ public class OfferRepository {
 	                    .build();
 	        }
 	        
-	        Offer _offer = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
-					.setParameter("postId", offer.getPostId())
-					.uniqueResult();
-
-	       if (_offer == null) {
-	    	   Offer newOffer = Offer.builder()
-		                .postId(offer.getPostId())
-		                .farmerId(offer.getFarmerId())
-		                .supplierId(offer.getSupplierId())
-		        		.measurement(offer.getMeasurement())
-						.value(offer.getValue())
-		                .price(offer.getPrice())
-		                .offerDate(LocalDate.now())
-		                .offerTime(LocalTime.now())
-		                .isAccepted(false)
-		                .isViewed(false)
-		                .status(true)
-		                .build();
-	    	   
-		        session.persist(newOffer);
-	       } else {
-	    	   _offer.setStatus(true);
-	       }
+	        Offer newOffer = Offer.builder()
+	                .postId(offer.getPostId())
+	                .farmerId(offer.getFarmerId())
+	                .supplierId(offer.getSupplierId())
+	        		.measurement(offer.getMeasurement())
+					.value(offer.getValue())
+	                .price(offer.getPrice())
+	                .offerDate(LocalDate.now())
+	                .offerTime(LocalTime.now())
+	                .isAccepted(false)
+	                .isViewed(false)
+	                .status(true)
+	                .build();
+    	   
+	        session.persist(newOffer);
 
 	        session.getTransaction().commit();
 

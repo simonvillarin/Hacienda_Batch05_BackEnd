@@ -28,10 +28,10 @@ public class AdvertisementController {
 	private final AdvertisementService advertisementService;
 	
 	@GET
-	@Path("/advertisements")
+	@Path("/ads/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<AdvertisementResponse> getAllAdvertisement() {
-		return advertisementService.getAllAdvertisement();
+	public List<AdvertisementResponse> getAllAdvertisement(@PathParam("id") Long id) {
+		return advertisementService.getAllAdvertisement(id);
 	}
 	
 	@GET
