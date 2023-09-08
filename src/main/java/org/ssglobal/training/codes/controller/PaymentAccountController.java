@@ -43,7 +43,7 @@ public class PaymentAccountController {
 	@GET
 	@Path("/payment-account/farmer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PaymentAccount> getPaymentAcccountByFarmerId(@PathParam("id") Integer id) {
+	public PaymentAccount getPaymentAcccountByFarmerId(@PathParam("id") Integer id) {
 		return paymentAccountService.getPaymentAccountByFarmerId(id);
 	}
 

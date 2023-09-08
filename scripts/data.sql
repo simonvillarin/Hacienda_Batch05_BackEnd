@@ -191,7 +191,7 @@ drop table if exists payment_account;
 CREATE TABLE payment_account(
 	payment_account_id SERIAL,
 	farmer_id INT,
-	account_number INT,
+	account_number BIGINT,
 	account_name VARCHAR(80),
 	status boolean
 );

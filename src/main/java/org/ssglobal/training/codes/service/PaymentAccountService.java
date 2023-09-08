@@ -24,7 +24,7 @@ public class PaymentAccountService {
 		return paymentAccountRepository.getPaymentAccountById(id);
 	}
 
-	public List<PaymentAccount> getPaymentAccountByFarmerId(Integer id) {
+	public PaymentAccount getPaymentAccountByFarmerId(Integer id) {
 		return paymentAccountRepository.getPaymentAccountByFarmerId(id);
 	}
 

@@ -194,6 +194,7 @@ public class TransactionRepository {
                   		.acceptDate(LocalDate.now())
                   		.acceptTime(LocalTime.now())
                   		.status(true)
+                  		.isViewed(false)
                   		.build();
 
                   session.persist(newTransaction);

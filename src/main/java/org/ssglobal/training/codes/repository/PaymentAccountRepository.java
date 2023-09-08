@@ -33,10 +33,11 @@ public class PaymentAccountRepository {
 		}
 	}
 
-	public List<PaymentAccount> getPaymentAccountByFarmerId(Integer id) {
+	public PaymentAccount getPaymentAccountByFarmerId(Integer id) {
 		try (Session session = sf.openSession()) {
 			return session.createQuery("FROM PaymentAccount WHERE farmerId = :farmerId", PaymentAccount.class)
-					.setParameter("farmerId", id).list();
+					.setParameter("farmerId", id)
+					.uniqueResult();
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -60,8 +61,14 @@ public class PaymentAccountRepository {
 			if (paymentAccount.getAccountName() != null) {
 				pa.setAccountName(paymentAccount.getAccountName());
 			}
-
-			session.persist(pa);
+			
+			PaymentAccount _paymentAccount = session.createQuery("FROM PaymentAccount WHERE farmerId = :farmerId", PaymentAccount.class)
+					.setParameter("farmerId", paymentAccount.getFarmerId())
+					.uniqueResult();
+			
+			if (_paymentAccount == null) {
+				session.persist(pa);
+			}
 
 			session.getTransaction().commit();
 
