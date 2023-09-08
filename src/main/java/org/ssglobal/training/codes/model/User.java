@@ -88,6 +88,9 @@ public class User implements UserDetails {
 	@Column(name = "id_type")
 	private String idType;
 	
+	@Column(name = "id_number")
+	private String idNumber;
+	
 	@Column(name = "id_front")
 	private String idFront;
 	
