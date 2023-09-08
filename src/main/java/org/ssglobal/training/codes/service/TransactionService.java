@@ -18,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 public class TransactionService {
 	private final TransactionRepository transactionRepository;
 	
+	public List<Transaction> getAllTransaction() {
+		return transactionRepository.getAllTransaction();
+	}
+	
 	public Transaction getTransactionById(Long id) {
 		return transactionRepository.getTransactionById(id);
 	}

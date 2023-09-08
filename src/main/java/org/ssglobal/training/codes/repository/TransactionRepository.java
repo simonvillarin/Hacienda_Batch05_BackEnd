@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.ssglobal.training.codes.model.Advertisement;
 import org.ssglobal.training.codes.model.Offer;
+import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.model.User;
 import org.ssglobal.training.codes.response.OfferResponse;
@@ -24,6 +25,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionRepository {
 	private final SessionFactory sf;
+	
+	public List<Transaction> getAllTransaction() {
+		try (Session session = sf.openSession()) {
+			return session.createQuery("FROM Transaction", Transaction.class).list();
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 	
 	public Transaction getTransactionById(Long id) {
 		try (Session session = sf.openSession()) {
@@ -165,10 +174,10 @@ public class TransactionRepository {
                         .timestamp(LocalDateTime.now())
                         .build();
             }
-            if (transaction.getOfferId() == null || transaction.getFarmerId() <= 0) {
+            if (transaction.getOfferId() == null || transaction.getOfferId() <= 0) {
                 return Response.builder()
                         .status(400)
-                        .message("Invalid farmer Id")
+                        .message("Invalid offer Id")
                         .timestamp(LocalDateTime.now())
                         .build();
             }

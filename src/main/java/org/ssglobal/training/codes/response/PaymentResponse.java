@@ -21,5 +21,14 @@ public class PaymentResponse {
 	private String paymentMode;
 	private LocalDate paymentDate;
 	private LocalTime paymentTime;
+	private String fullName;
+	private String unit;
+	private String street;
+	private String village;
+	private String barangay;
+	private String city;
+	private String province;
+	private String region;
+	private String contact;
 	private Boolean status;
 }

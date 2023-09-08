@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.response.PaymentResponse;
@@ -54,6 +53,14 @@ public class PaymentRepository {
 					.paymentMode(payment.getPaymentMode())
 					.paymentDate(payment.getPaymentDate())
 					.paymentTime(payment.getPaymentTime())
+					.fullName(payment.getFullName())
+					.unit(payment.getUnit())
+					.street(payment.getStreet())
+					.village(payment.getVillage())
+					.barangay(payment.getBarangay())
+					.city(payment.getProvince())
+					.region(payment.getRegion())
+					.contact(payment.getContact())
 					.status(payment.getStatus())
 					.build();
 			
@@ -113,6 +120,43 @@ public class PaymentRepository {
             if (payment.getPaymentMode() != null) {
                 existingPayment.setPaymentMode(payment.getPaymentMode());
             }
+            
+            if (payment.getFullName() == null || payment.getFullName().isEmpty()) {
+                existingPayment.setFullName(payment.getFullName());
+            }
+            
+            if (payment.getUnit() == null || payment.getUnit().isEmpty()) {
+                existingPayment.setUnit(payment.getUnit());
+            }
+            
+            if (payment.getStreet() == null || payment.getStreet().isEmpty()) {
+                existingPayment.setStreet(payment.getStreet());
+            }
+            
+            if (payment.getVillage() == null || payment.getVillage().isEmpty()) {
+                existingPayment.setVillage(payment.getVillage());
+            }
+            
+            if (payment.getBarangay() == null || payment.getBarangay().isEmpty()) {
+                existingPayment.setBarangay(payment.getBarangay());
+            }
+            
+            if (payment.getCity() == null || payment.getCity().isEmpty()) {
+                existingPayment.setCity(payment.getCity());
+            }
+            
+            if (payment.getProvince() == null || payment.getProvince().isEmpty()) {
+                existingPayment.setProvince(payment.getProvince());
+            }
+            
+            if (payment.getRegion() == null || payment.getRegion().isEmpty()) {
+                existingPayment.setRegion(payment.getRegion());
+            }
+            
+            if (payment.getContact() == null || payment.getContact().isEmpty()) {
+                existingPayment.setContact(payment.getContact());
+            }
+            
             if (payment.getStatus() != null) {
                 existingPayment.setStatus(payment.getStatus());
             }
