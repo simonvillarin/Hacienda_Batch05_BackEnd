@@ -77,6 +77,9 @@ public class AuthenticationService {
 			if (user.getIdType() != null) {
 				_user.setIdType(user.getIdType());
 			}
+			if (user.getIdNumber() != null) {
+				_user.setIdNumber(user.getIdNumber());
+			}
 			if (user.getPassword() != null) {
 				_user.setPassword(passwordEncoder.encode(user.getPassword()));
 			}

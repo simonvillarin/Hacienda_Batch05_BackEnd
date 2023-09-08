@@ -32,6 +32,7 @@ public class UserRequest {
 	private String username;
 	private String password;
 	private String idType;
+	private String idNumber;
 	private String selfie;
 	private String filename;
 	private String mimeType;

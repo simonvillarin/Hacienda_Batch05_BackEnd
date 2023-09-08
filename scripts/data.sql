@@ -23,6 +23,7 @@ CREATE TABLE users(
 	email VARCHAR(80),
 	image TEXT,
 	id_type VARCHAR(80),
+	id_number VARCHAR(80),
 	id_front TEXT,
 	id_back TEXT,
 	selfie TEXT,
