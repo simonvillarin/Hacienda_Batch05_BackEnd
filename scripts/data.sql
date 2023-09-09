@@ -182,7 +182,7 @@ CREATE TABLE payment_details(
 	transaction_id INT,
 	payment_account_id INT,
 	payment_mode VARCHAR(80),
-	account_number INT,
+	account_number BIGINT,
 	account_name VARCHAR(80),
 	status boolean
 );
