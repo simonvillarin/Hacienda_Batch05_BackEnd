@@ -1,6 +1,7 @@
 package org.ssglobal.training.codes.response;
 
 import java.time.LocalDate;
+
 import java.time.LocalTime;
 
 import org.ssglobal.training.codes.model.User;
@@ -24,7 +25,8 @@ public class TransactionResponse {
 	private LocalDate paidDate;
 	private LocalTime paidTime;
 	private LocalDate deliverDate;
-	private LocalTime deliverTime;
+	private LocalTime deliveredTime;
 	private Boolean status;
 	private Boolean isViewed;
+	private Boolean isDelivered;
 }	

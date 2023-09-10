@@ -150,9 +150,27 @@ create table transaction(
 	paid_date date,
 	paid_time time,
 	deliver_date date,
-	deliver_time time,
+	delivered_date date,
+	delivered_time time,
 	status boolean,
-	is_viewed BOOLEAN
+	is_viewed BOOLEAN,
+	is_delivered BOOLEAN
+);
+
+drop table if exists change_address;
+CREATE TABLE change_address (
+	change_address_id SERIAL,
+	transaction_id INT,
+	full_name VARCHAR(255),
+	unit VARCHAR(255),
+	street VARCHAR(255),
+	village VARCHAR(255),
+	barangay VARCHAR(255),
+	city VARCHAR(255),
+	province VARCHAR(255),
+	region VARCHAR(255),
+	contact VARCHAR(20),
+	status BOOLEAN
 );
 
 drop table if exists payment;
@@ -163,15 +181,6 @@ CREATE TABLE payment(
 	payment_mode VARCHAR(80),
 	payment_date date,
 	payment_time time,
-	full_name VARCHAR(255),
-	unit VARCHAR(255),
-	street VARCHAR(255),
-	village VARCHAR(255),
-	barangay VARCHAR(255),
-	city VARCHAR(255),
-	province VARCHAR(255),
-	region VARCHAR(255),
-	contact VARCHAR(20),
 	status boolean
 );
 

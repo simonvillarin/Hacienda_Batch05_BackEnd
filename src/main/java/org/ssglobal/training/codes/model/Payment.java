@@ -42,33 +42,6 @@ public class Payment {
 	@Column(name = "payment_time")
 	private LocalTime paymentTime;
 	
-	@Column(name = "full_name")
-	private String fullName;
-	
-	@Column(name = "unit")
-	private String unit;
-	
-	@Column(name = "street")
-	private String street;
-	
-	@Column(name = "village")
-	private String village;
-	
-	@Column(name = "barangay")
-	private String barangay;
-	
-	@Column(name = "city")
-	private String city;
-	
-	@Column(name = "province")
-	private String province;
-	
-	@Column(name = "region")
-	private String region;
-	
-	@Column(name = "contact")
-	private String contact;
-	
 	@Column(name = "status")
 	private Boolean status;
 }

@@ -2,7 +2,6 @@ package org.ssglobal.training.codes.response;
 
 import org.ssglobal.training.codes.model.Transaction;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +11,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentDetailsResponse {
-	private Long paymentDetailsId;
-	private String paymentIdRef;
+public class ChangeAddressResponse {
+	private Long changeAddressId;
 	private Transaction transaction;
-	private Long paymentAccountId;
-	private String paymentMode;
-	private Long accountNumber;
-	private String accountName;
+	private String fullName;
+	private String unit;
+	private String street;
+	private String village;
+	private String barangay;
+	private String city;
+	private String province;
+	private String region;
+	private String contact;
 	private Boolean status;
 }

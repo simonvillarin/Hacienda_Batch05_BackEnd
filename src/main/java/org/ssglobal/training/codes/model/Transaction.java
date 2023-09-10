@@ -51,12 +51,18 @@ public class Transaction {
 	@Column(name = "deliver_date")
 	private LocalDate deliverDate;
 	
-	@Column(name = "deliver_time")
-	private LocalTime deliverTime;
+	@Column(name = "delivered_date")
+	private LocalDate deliveredDate;
+	
+	@Column(name = "delivered_time")
+	private LocalTime deliveredTime;
 	
 	@Column(name = "status")
 	private Boolean status;
 	
 	@Column(name = "is_viewed")
 	private Boolean isViewed;
+	
+	@Column(name = "is_delivered")
+	private Boolean isDelivered;
 }
