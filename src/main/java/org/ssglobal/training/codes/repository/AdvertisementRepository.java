@@ -45,8 +45,6 @@ public class AdvertisementRepository {
 						.setParameter("status", true)
 						.uniqueResult();
 				
-				System.out.println(offer);
-				
 				boolean isOffered = false;
 				if (offer != null) {
 					isOffered = true;
@@ -87,8 +85,11 @@ public class AdvertisementRepository {
 						.setParameter("userId", ad.getSupplierId());
 				User supplier = query.uniqueResult();
 				
-				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId AND supplierId = :supplierId AND status = :status AND isViewed = :isViewed", Offer.class)
 						.setParameter("postId", ad.getPostId())
+						.setParameter("supplierId", id)
+						.setParameter("status", true)
+						.setParameter("isViewed", false)
 						.list();
 				
 				AdvertisementResponse adResponse = AdvertisementResponse.builder()
