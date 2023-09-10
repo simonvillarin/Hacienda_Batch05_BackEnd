@@ -5,10 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
-import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.repository.PaymentRepository;
 import org.ssglobal.training.codes.response.PaymentResponse;
+import org.ssglobal.training.codes.response.PaymentResponse1;
 import org.ssglobal.training.codes.response.Response;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,14 @@ public class PaymentService {
 	
 	public PaymentResponse getPaymentByTransactionId(Long id) {
 		 return paymentRepository.getPaymentByTransactionId(id);
+	}
+	
+	public List<PaymentResponse1> getPaymentByFarmerId(Long id) {
+		return paymentRepository.getPaymentByFarmerId(id);
+	}
+	
+	public List<PaymentResponse1> getPaymentBySupplierId(Long id) {
+		return paymentRepository.getPaymentBySupplierId(id);
 	}
     
     @Transactional
