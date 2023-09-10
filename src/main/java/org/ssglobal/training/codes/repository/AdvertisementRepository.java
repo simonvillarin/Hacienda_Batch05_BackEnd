@@ -45,8 +45,6 @@ public class AdvertisementRepository {
 						.setParameter("status", true)
 						.uniqueResult();
 				
-				System.out.println(offer);
-				
 				boolean isOffered = false;
 				if (offer != null) {
 					isOffered = true;
@@ -87,8 +85,11 @@ public class AdvertisementRepository {
 						.setParameter("userId", ad.getSupplierId());
 				User supplier = query.uniqueResult();
 				
-				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId", Offer.class)
+				List<Offer> offers = session.createQuery("FROM Offer WHERE postId = :postId AND supplierId = :supplierId AND status = :status AND isViewed = :isViewed", Offer.class)
 						.setParameter("postId", ad.getPostId())
+						.setParameter("supplierId", id)
+						.setParameter("status", true)
+						.setParameter("isViewed", false)
 						.list();
 				
 				AdvertisementResponse adResponse = AdvertisementResponse.builder()
@@ -125,17 +126,6 @@ public class AdvertisementRepository {
 	public Response addAdvertisement(AdvertisementRequest advertisement) {
 		try (Session session = sf.openSession()) {
 			session.beginTransaction();
-			
-			Advertisement adver = session.createQuery("FROM Advertisement WHERE name = :name", Advertisement.class)
-					.setParameter("name", advertisement.getName())
-					.uniqueResult();
-			if (adver != null) {
-				return Response.builder()
-						.status(400)
-						.message("Crop name already exists")
-						.timestamp(LocalDateTime.now())
-						.build();
-			}
 			
 			Advertisement ad = new Advertisement();
 			ad.setPostDate(LocalDate.now());

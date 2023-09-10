@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.ssglobal.training.codes.model.Course;
 import org.ssglobal.training.codes.model.Payment;
 import org.ssglobal.training.codes.response.PaymentResponse;
+import org.ssglobal.training.codes.response.PaymentResponse1;
 import org.ssglobal.training.codes.response.Response;
 import org.ssglobal.training.codes.service.PaymentService;
 
@@ -46,6 +47,20 @@ public class PaymentController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public PaymentResponse getPaymentByTransactionId(@PathParam("id") Long id) {
 		return paymentService.getPaymentByTransactionId(id);
+	}
+	
+	@GET
+	@Path("/payment/transaction/farmer/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PaymentResponse1> getPaymentByFarmerId(@PathParam("id") Long id) {
+		return paymentService.getPaymentByFarmerId(id);
+	}
+	
+	@GET
+	@Path("/payment/transaction/supplier/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PaymentResponse1> getPaymentBySupplierId(@PathParam("id") Long id) {
+		return paymentService.getPaymentBySupplierId(id);
 	}
 	
 	@POST
