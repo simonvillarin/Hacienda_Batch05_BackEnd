@@ -59,6 +59,7 @@ public class PaymentRepository {
 					.village(payment.getVillage())
 					.barangay(payment.getBarangay())
 					.city(payment.getProvince())
+					.province(payment.getProvince())
 					.region(payment.getRegion())
 					.contact(payment.getContact())
 					.status(payment.getStatus())
@@ -94,6 +95,15 @@ public class PaymentRepository {
                     .paymentMode(payment.getPaymentMode())
                     .paymentDate(LocalDate.now())
                     .paymentTime(LocalTime.now())
+                    .fullName(payment.getFullName())
+					.unit(payment.getUnit())
+					.street(payment.getStreet())
+					.village(payment.getVillage())
+					.barangay(payment.getBarangay())
+					.city(payment.getProvince())
+					.province(payment.getProvince())
+					.region(payment.getRegion())
+					.contact(payment.getContact())
                     .status(true)
                     .build();
 
