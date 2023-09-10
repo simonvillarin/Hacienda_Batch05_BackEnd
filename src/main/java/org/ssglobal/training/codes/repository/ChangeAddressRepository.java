@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.ssglobal.training.codes.model.ChangeAddress;
-import org.ssglobal.training.codes.model.PaymentAccount;
 import org.ssglobal.training.codes.model.Transaction;
 import org.ssglobal.training.codes.response.ChangeAddressResponse;
 import org.ssglobal.training.codes.response.Response;

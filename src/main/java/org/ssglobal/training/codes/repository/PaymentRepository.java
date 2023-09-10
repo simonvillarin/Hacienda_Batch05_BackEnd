@@ -63,15 +63,6 @@ public class PaymentRepository {
 					.paymentMode(payment.getPaymentMode())
 					.paymentDate(payment.getPaymentDate())
 					.paymentTime(payment.getPaymentTime())
-					.fullName(payment.getFullName())
-					.unit(payment.getUnit())
-					.street(payment.getStreet())
-					.village(payment.getVillage())
-					.barangay(payment.getBarangay())
-					.city(payment.getProvince())
-					.province(payment.getProvince())
-					.region(payment.getRegion())
-					.contact(payment.getContact())
 					.status(payment.getStatus())
 					.build();
 			
@@ -124,7 +115,7 @@ public class PaymentRepository {
 							.paidDate(transaction.getPaidDate())
 							.paidTime(transaction.getPaidTime())
 							.deliverDate(transaction.getDeliverDate())
-							.deliverTime(transaction.getDeliverTime())
+							.deliveredTime(transaction.getDeliveredTime())
 							.status(transaction.getStatus())
 							.isViewed(transaction.getIsViewed())
 							.build();
@@ -153,15 +144,6 @@ public class PaymentRepository {
 							.paymentMode(payment.getPaymentMode())
 							.paymentDate(payment.getPaymentDate())
 							.paymentTime(payment.getPaymentTime())
-							.fullName(payment.getFullName())
-							.unit(payment.getUnit())
-							.street(payment.getStreet())
-							.village(payment.getVillage())
-							.barangay(payment.getBarangay())
-							.city(payment.getCity())
-							.province(payment.getProvince())
-							.region(payment.getRegion())
-							.contact(payment.getContact())
 							.status(payment.getStatus())
 							.build();
 					history.add(paymentResponse);
@@ -218,7 +200,7 @@ public class PaymentRepository {
 							.paidDate(transaction.getPaidDate())
 							.paidTime(transaction.getPaidTime())
 							.deliverDate(transaction.getDeliverDate())
-							.deliverTime(transaction.getDeliverTime())
+							.deliveredTime(transaction.getDeliveredTime())
 							.status(transaction.getStatus())
 							.isViewed(transaction.getIsViewed())
 							.build();
@@ -247,15 +229,6 @@ public class PaymentRepository {
 							.paymentMode(payment.getPaymentMode())
 							.paymentDate(payment.getPaymentDate())
 							.paymentTime(payment.getPaymentTime())
-							.fullName(payment.getFullName())
-							.unit(payment.getUnit())
-							.street(payment.getStreet())
-							.village(payment.getVillage())
-							.barangay(payment.getBarangay())
-							.city(payment.getCity())
-							.province(payment.getProvince())
-							.region(payment.getRegion())
-							.contact(payment.getContact())
 							.status(payment.getStatus())
 							.build();
 					history.add(paymentResponse);
@@ -293,15 +266,6 @@ public class PaymentRepository {
                     .paymentMode(payment.getPaymentMode())
                     .paymentDate(LocalDate.now())
                     .paymentTime(LocalTime.now())
-                    .fullName(payment.getFullName())
-					.unit(payment.getUnit())
-					.street(payment.getStreet())
-					.village(payment.getVillage())
-					.barangay(payment.getBarangay())
-					.city(payment.getProvince())
-					.province(payment.getProvince())
-					.region(payment.getRegion())
-					.contact(payment.getContact())
                     .status(true)
                     .build();
 
