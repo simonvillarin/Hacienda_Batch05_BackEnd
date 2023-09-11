@@ -69,4 +69,12 @@ public class EmailController {
 	public Response updateUser(@PathParam("id") Long id, @RequestBody  UserRequest user) {
 		return emailService.updateUser(id, user);
 	}
+	
+	@POST
+	@Path("/email/message")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateUser(@RequestBody EmailRequest email) {
+		return emailService.sendEmail1(email);
+	}
 } 

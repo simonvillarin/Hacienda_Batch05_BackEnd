@@ -131,4 +131,22 @@ public class EmailService {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	public Response sendEmail1(EmailRequest email) {
+		try {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom(sender);
+			
+			message.setSubject(email.getSubject());
+			message.setText(email.getMessage());
+			mailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.builder()
+				.status(404)
+				.message("Email successfully sent")
+				.timestamp(LocalDateTime.now())
+				.build();
+	}
 }
