@@ -79,7 +79,7 @@ public class PaymentRepository {
 			List<PaymentResponse1> history = new ArrayList<>();
 			payments.stream().forEach(payment -> {
 				Transaction transaction = session.get(Transaction.class, payment.getTransactionId());
-				if (transaction.getFarmerId() == id && transaction.getDeliverDate() != null) {		
+				if (transaction.getFarmerId() == id && transaction.getDeliveredDate() != null) {		
 					Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
 							.setParameter("userId", transaction.getSupplierId());
 					User supplier = query.uniqueResult();
@@ -114,7 +114,7 @@ public class PaymentRepository {
 							.acceptTime(transaction.getAcceptTime())
 							.paidDate(transaction.getPaidDate())
 							.paidTime(transaction.getPaidTime())
-							.deliverDate(transaction.getDeliverDate())
+							.deliverDate(transaction.getDeliveredDate())
 							.deliveredTime(transaction.getDeliveredTime())
 							.status(transaction.getStatus())
 							.isViewed(transaction.getIsViewed())
@@ -164,7 +164,7 @@ public class PaymentRepository {
 			List<PaymentResponse1> history = new ArrayList<>();
 			payments.stream().forEach(payment -> {
 				Transaction transaction = session.get(Transaction.class, payment.getTransactionId());
-				if (transaction.getSupplierId() == id && transaction.getDeliverDate() != null) {
+				if (transaction.getSupplierId() == id && transaction.getDeliveredDate() != null) {
 					Query<User> query = session.createQuery("FROM User WHERE userId = :userId", User.class)
 							.setParameter("userId", transaction.getSupplierId());
 					User supplier = query.uniqueResult();
@@ -199,7 +199,7 @@ public class PaymentRepository {
 							.acceptTime(transaction.getAcceptTime())
 							.paidDate(transaction.getPaidDate())
 							.paidTime(transaction.getPaidTime())
-							.deliverDate(transaction.getDeliverDate())
+							.deliverDate(transaction.getDeliveredDate())
 							.deliveredTime(transaction.getDeliveredTime())
 							.status(transaction.getStatus())
 							.isViewed(transaction.getIsViewed())

@@ -182,12 +182,11 @@ public class TransactionRepository {
 				transac.setDeliverDate(transaction.getDeliverDate().plusDays(1));
 			}
 			if (transaction.getDeliveredDate() != null) {
-				transac.setDeliveredDate(transaction.getDeliveredDate());
+				transac.setDeliveredDate(LocalDate.now());
 			}
 			if (transaction.getDeliveredTime() != null) {
-				transac.setDeliveredTime(transaction.getDeliveredTime());
+				transac.setDeliveredTime(LocalTime.now());
 			}
-
 			if (transaction.getStatus() != null) {
 				transac.setStatus(transaction.getStatus());
 			}

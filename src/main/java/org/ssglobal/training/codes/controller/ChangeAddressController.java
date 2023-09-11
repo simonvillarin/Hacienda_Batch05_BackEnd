@@ -27,7 +27,7 @@ public class ChangeAddressController {
 	private final ChangeAddressService changeAddressService;
 	
 	@GET
-	@Path("/change-address")
+	@Path("/change-addresss")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ChangeAddress> getChangeAddress() {
 		return changeAddressService.getAllChangeAddress();
@@ -48,7 +48,7 @@ public class ChangeAddressController {
 	}
 	
 	@POST
-	@Path("/change-address")
+	@Path("/transaction/change-address")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addChangeAddress(@RequestBody ChangeAddress changeAddress) {

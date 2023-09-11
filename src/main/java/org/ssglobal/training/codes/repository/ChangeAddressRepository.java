@@ -58,7 +58,6 @@ public class ChangeAddressRepository {
 					.contact(changeAddress.getContact())
 					.status(changeAddress.getStatus())
 					.build();
-
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -117,8 +116,6 @@ public class ChangeAddressRepository {
 				return Response.builder().status(400).message("Invalid contact").timestamp(LocalDateTime.now())
 						.build();
 			}
-
-			
 	
 			ChangeAddress newChangeAddress = ChangeAddress.builder()
 					.transactionId(changeAddress.getTransactionId())
